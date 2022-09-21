@@ -8,8 +8,8 @@
       "default_popup": "popup.html"
     },
     "background": {
-        "service_worker": ["blockpage.js"],
-    }
+        "service_worker": "blockpage.js"
+    },
     "icons": {
       "16": "assets/icon16.png",
       "48": "assets/icon48.png",
