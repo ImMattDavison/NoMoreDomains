@@ -1,5 +1,4 @@
 // Keep service worker alive
-
 let lifeline;
 
 keepAlive();
