@@ -1,8 +1,8 @@
-const host = "https://dynadot.com"
+const host = "https://www.dynadot.com"
 
 chrome.webRequest.onBeforeRequest.addListener(
     function (request) {
-        if(request.url = host){
+        if(request.url){
             chrome.tabs.update({url: "https://google.com"});
         }else{
             return console.log("Not blocked");
@@ -10,7 +10,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     },
     {
       types: ['main_frame'],
-      urls: ['<all_urls>'],
+      urls: ['*://*.dynadot.com/*', '*://dynadot.com/*'],
     },
     [],
 );
