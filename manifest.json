@@ -8,7 +8,7 @@
       "default_popup": "popup.html"
     },
     "background": {
-        "scripts": ["blockpage.js"],
+        "service_worker": ["blockpage.js"],
         "persistent": true
       },
     "icons": {
