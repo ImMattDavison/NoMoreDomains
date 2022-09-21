@@ -10,3 +10,10 @@ body {
   padding-right: 0px;
   margin: auto;
 }
+
+.title-block{
+    background-color: #007bff;
+    color: white;
+    border-top: 1px solid #007bff;
+    border-bottom: 1px solid orangered;
+}
