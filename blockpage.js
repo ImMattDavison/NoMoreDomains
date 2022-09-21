@@ -73,6 +73,11 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.names.co.uk/*',
           // Block all names.co.uk domains
           '*://names.co.uk/*',
+
+          // Block all domain.com subdomains
+          '*://*.domain.com/*',
+          // Block all domain.com domains
+          '*://domain.com/*',
       ],
     },
     [],
