@@ -1,3 +1,16 @@
+// Keep service worker alive
+const now = performance.now();
+const keepServiceWorkerActive = () => 
+  dispatchEvent(
+    new CustomEvent('keepactive', {
+      detail: `Active at ${~~(((performance.now() - now) / 1000) / 60)} minutes.`
+    })
+  );
+const handleKeepServiceWorkerActive = (e) => console.log(e.detail);
+addEventListener("keepactive", handleKeepServiceWorkerActive);
+let interval = setInterval(keepServiceWorkerActive, 1000 * 60 * 5);
+
+// Handle web requests and block domain registrars
 chrome.webRequest.onBeforeRequest.addListener(
     function (request) {
         if(request.url){
