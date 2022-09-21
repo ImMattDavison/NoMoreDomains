@@ -1,5 +1,3 @@
-const host = "https://www.dynadot.com"
-
 chrome.webRequest.onBeforeRequest.addListener(
     function (request) {
         if(request.url){
