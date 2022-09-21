@@ -8,7 +8,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     },
     {
       types: ['main_frame'],
-      urls: ['*://*.dynadot.com/*', '*://dynadot.com/*', '*://*.porkbun.com/*', '*://porkbun.com/*'],
+      urls: ['*://*.dynadot.com/*', '*://dynadot.com/*', '*://*.porkbun.com/*', '*://porkbun.com/*', '*://*.godaddy.com/*', '*://godaddy.com/*'],
     },
     [],
 );
