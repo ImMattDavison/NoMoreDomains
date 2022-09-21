@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "Need to stop buying domain names? No More Domain names blocks all the best known domain registrars and domain name auction sites to help you stop buying so many domains!",
     "action": {
-      "default_icon": "",
+      "default_icon": "assets/icon.png",
       "default_popup": ""
     },
     "icons": {
