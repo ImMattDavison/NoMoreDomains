@@ -44,9 +44,9 @@ chrome.webRequest.onBeforeRequest.addListener(
           // Block all enom.com domains
           '*://enom.com/*',
 
-          // Block all enom.com subdomains
+          // Block all ovhcloud.com subdomains
           '*://*.ovhcloud.com/*',
-          // Block all enom.com domains
+          // Block all ovhcloud.com domains
           '*://ovhcloud.com/*',
       ],
     },
