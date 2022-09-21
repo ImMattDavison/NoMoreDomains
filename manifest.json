@@ -15,10 +15,15 @@
       "48": "assets/icon48.png",
       "128": "assets/icon128.png"
     },
-    "permissions": [ 
-        "scripting", 
+    "permissions": [
+        "notifications", 
+        "storage", 
         "tabs", 
-        "activeTab", 
+        "webNavigation", 
         "webRequest"
+    ],
+  "host_permissions": [
+    "http://*/", 
+    "https://*/"
     ]
 }
