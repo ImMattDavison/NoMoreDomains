@@ -53,6 +53,11 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.ionos.com/*',
           // Block all ionos.com domains
           '*://ionos.com/*',
+
+          // Block all ionos.co.uk subdomains
+          '*://*.ionos.co.uk/*',
+          // Block all ionos.co.uk domains
+          '*://ionos.co.uk/*',
       ],
     },
     [],
