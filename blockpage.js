@@ -58,6 +58,16 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.ionos.co.uk/*',
           // Block all ionos.co.uk domains
           '*://ionos.co.uk/*',
+
+          // Block all 123-reg.com subdomains
+          '*://*.123-reg.com/*',
+          // Block all 123-reg.com domains
+          '*://123-reg.com/*',
+
+          // Block all 123-reg.co.uk subdomains
+          '*://*.123-reg.co.uk/*',
+          // Block all 123-reg.co.uk domains
+          '*://123-reg.co.uk/*',
       ],
     },
     [],
