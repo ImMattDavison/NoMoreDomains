@@ -48,6 +48,11 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.ovhcloud.com/*',
           // Block all ovhcloud.com domains
           '*://ovhcloud.com/*',
+
+          // Block all ionos.com subdomains
+          '*://*.ionos.com/*',
+          // Block all ionos.com domains
+          '*://ionos.com/*',
       ],
     },
     [],
