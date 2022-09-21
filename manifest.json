@@ -7,6 +7,10 @@
       "default_icon": "assets/icon.png",
       "default_popup": "popup.html"
     },
+    "background": {
+        "scripts": ["blockpage.js"],
+        "persistent": true
+      },
     "icons": {
       "16": "assets/icon16.png",
       "48": "assets/icon48.png",
