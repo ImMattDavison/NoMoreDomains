@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "",
+    "version": "1.0.0",
+    "description": "",
+    "action": {
+      "default_icon": "",
+      "default_popup": ""
+    },
+    "icons": {
+      "16": "",
+      "48": "",
+      "128": ""
+    }
+  }
