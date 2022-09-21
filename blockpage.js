@@ -68,6 +68,11 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.123-reg.co.uk/*',
           // Block all 123-reg.co.uk domains
           '*://123-reg.co.uk/*',
+
+          // Block all names.co.uk subdomains
+          '*://*.names.co.uk/*',
+          // Block all names.co.uk domains
+          '*://names.co.uk/*',
       ],
     },
     [],
