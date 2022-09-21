@@ -23,7 +23,7 @@
         "webRequest"
     ],
   "host_permissions": [
-    "http://*/", 
-    "https://*/"
+    "http://*/*", 
+    "https://*/*"
     ]
 }
