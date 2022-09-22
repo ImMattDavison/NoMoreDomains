@@ -126,6 +126,18 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.sedo.com/*',
           // Block all sedo.com domains
           '*://sedo.com/*',
+
+          // Block all dan.com subdomains
+          '*://*.dan.com/*',
+          // Block all dan.com domains
+          '*://dan.com/*',
+
+          // Block all domains.google subdomains
+          '*://*.domains.google/*',
+          // Block all domains.google domains
+          '*://domains.google/*',
+
+          // Block all  subdomains
       ],
     },
     [],
