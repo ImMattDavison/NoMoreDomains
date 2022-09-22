@@ -43,11 +43,11 @@ chrome.runtime.onConnect.addListener(port => {
 // Handle web requests and block domain registrars
 chrome.webRequest.onBeforeRequest.addListener(
     function (request) {
-        if(request.url){
-            chrome.tabs.update({url: "https://google.com"});
-        }else{
-            return console.log("Not blocked");
-        }
+            if(request.url){
+                chrome.tabs.update({url: "https://google.com"});
+            }else{
+                return console.log("Not blocked");
+            }
     },
     {
       types: ['main_frame'],
