@@ -137,7 +137,10 @@ chrome.webRequest.onBeforeRequest.addListener(
           // Block all domains.google domains
           '*://domains.google/*',
 
-          // Block all  subdomains
+          // Block all afternic.com subdomains
+          '*://*.afternic.com/*',
+          // Block all afternic.com domains
+          '*://afternic.com/*',
       ],
     },
     [],
