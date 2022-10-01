@@ -23,8 +23,12 @@ body {
     border-width: 0.2px;
     border-radius: 8px;
     cursor: pointer;
+    background-color: rgb(219, 191, 180);
+    color: black;
+    
 }
 
 .power-switch button:hover{
-    background-color: rgba(255, 68, 0,1);
+    background-color: grey;
+    color: white;
 }
