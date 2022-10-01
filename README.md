@@ -7,4 +7,4 @@ NoMoreDomains checks the URL of every site you visit to see if it is one of over
 
 ## The Future
 
-NoMoreDomains is only in early development, we plan to add a redirect to a branded page eventually and create a website for NoMoreDomains. As NoMoreDomains is opensource we rely solely on contributions to build this chrome extension. If you wish to make a contributions please visit the issues and find issues that need assistance or create one of your own!
+NoMoreDomains is only in early development, we plan to add a redirect to a branded page eventually and create a website for NoMoreDomains. As NoMoreDomains is opensource we rely solely on contributions to build this chrome extension. If you wish to make a contributions please visit the [issues](https://github.com/immattdavison/NoMoreDomains/issues) and find issues that need assistance or create one of your own!
