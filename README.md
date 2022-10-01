@@ -3,7 +3,7 @@ Need to stop buying domain names? No More Domains blocks all the best-known doma
 
 ## How It Works
 
-NoMoreDomains checks the URL of every site you visit to see if it is one of over 20 listed, known registrars. If the URL matches one of the listed registrars NoMoreDomains will make an immediate redirect away from that site to Google. While the extension is active you will not be able to access any of the listed registrars. 
+NoMoreDomains checks the URL of every site you visit to see if it is one of over 20 listed, known registrars. If the URL matches one of the listed registrars NoMoreDomains will make an immediate redirect away from that site to Google. While the extension is active you will not be able to access any of the listed registrars.
 
 ## The Future
 
