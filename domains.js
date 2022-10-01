@@ -17,5 +17,9 @@ export default [
     "sedo.com",
     "dan.com",
     "domains.google",
-    "afternic.com"
+    "afternic.com",
+    "godaddy.co.uk",
+    "hostinger.com",
+    "hostinger.co.uk",
+    "20i.com"
 ]
