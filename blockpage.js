@@ -146,6 +146,18 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.godaddy.co.uk/*',
           // Block all godaddy.co.uk domains
           '*://godaddy.co.uk/*',
+
+          // Block all hostinger.com subdomains
+          '*://*.hostinger.com/*',
+          // Block all hostinger.com domains
+          '*://hostinger.com/*',
+
+          // Block all hostinger.co.uk subdomains
+          '*://*.hostinger.co.uk/*',
+          // Block all hostinger.co.uk domains
+          '*://hostinger.co.uk/*',
+
+          
       ],
     },
     [],
