@@ -6,6 +6,7 @@ async function keepAlive() {
   if (lifeline) return;
   for (const tab of await chrome.tabs.query({ url: '*://*/*' })) {
     try {
+      console.log(tab)
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: () => {
@@ -51,7 +52,8 @@ fetch("/domains.json")
         priority: 1,
         action: { type: "redirect", redirect: { url: "https://google.com/" } },
         condition: {
-          urlFilter: `*://*.${domain}/*`,
+          
+          urlFilter: domain,
           resourceTypes: ["main_frame"],
         },
       })),
