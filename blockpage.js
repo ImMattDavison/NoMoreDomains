@@ -141,6 +141,11 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.afternic.com/*',
           // Block all afternic.com domains
           '*://afternic.com/*',
+
+          // Block all godaddy.co.uk subdomains
+          '*://*.godaddy.co.uk/*',
+          // Block all godaddy.co.uk domains
+          '*://godaddy.co.uk/*',
       ],
     },
     [],
