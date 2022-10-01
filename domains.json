@@ -1,4 +1,4 @@
-export default [
+[
     "// In this file, you can add hostnames to be redirected.",
     "dynadot.com",
     "porkbun.com",

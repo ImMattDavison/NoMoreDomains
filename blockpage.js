@@ -40,18 +40,20 @@ chrome.runtime.onConnect.addListener(port => {
   }
 });
 
-import domains from "./domains.js";
-// Handle web requests from domains and redirect them to google.com/ via declarativeNetRequest
-chrome.declarativeNetRequest.updateDynamicRules({
-  removeRuleIds: domains.map((_, i) => i+1),
-  addRules: domains.map((domain,i) => ({
-    id: i + 1,
-    priority: 1,
-    action: { type: "redirect", redirect: { url: "https://google.com/" } },
-    condition:
-      {
-        urlFilter: `*://*.${domain}/*`,
-        resourceTypes: ["main_frame"],
-      },
-  })),
-});
+fetch("/domains.json")
+  .then(res => res.json())
+  .then(domains => {
+    chrome.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds: domains.map((_, i) => i+1),
+      addRules: domains.map((domain,i) => ({
+        id: i + 1,
+        priority: 1,
+        action: { type: "redirect", redirect: { url: "https://google.com/" } },
+        condition:
+          {
+            urlFilter: `*://*.${domain}/*`,
+            resourceTypes: ["main_frame"],
+          },
+      })),
+    });    
+  })
