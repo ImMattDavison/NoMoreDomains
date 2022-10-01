@@ -161,8 +161,6 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.20i.com/*',
           // Block all 20i.com domains
           '*://20i.com/*',
-
-          
       ],
     },
     [],
