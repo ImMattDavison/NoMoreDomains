@@ -8,8 +8,7 @@
       "default_popup": "popup.html"
   },
   "background": {
-        "service_worker": "blockpage.js",
-        "type": "module"
+        "service_worker": "blockpage.js"
   },
   "icons": {
       "16": "assets/icon16.png",
@@ -17,8 +16,12 @@
       "128": "assets/icon128.png"
   },
   "permissions": [
-        "tabs",
-        "declarativeNetRequestWithHostAccess"
+        "notifications", 
+        "storage", 
+        "tabs", 
+        "webNavigation", 
+        "webRequest",
+        "scripting"
   ],
   "host_permissions": [
     "http://*/*", 
