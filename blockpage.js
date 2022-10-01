@@ -141,6 +141,26 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.afternic.com/*',
           // Block all afternic.com domains
           '*://afternic.com/*',
+
+          // Block all godaddy.co.uk subdomains
+          '*://*.godaddy.co.uk/*',
+          // Block all godaddy.co.uk domains
+          '*://godaddy.co.uk/*',
+
+          // Block all hostinger.com subdomains
+          '*://*.hostinger.com/*',
+          // Block all hostinger.com domains
+          '*://hostinger.com/*',
+
+          // Block all hostinger.co.uk subdomains
+          '*://*.hostinger.co.uk/*',
+          // Block all hostinger.co.uk domains
+          '*://hostinger.co.uk/*',
+
+          // Block all 20i.com subdomains
+          '*://*.20i.com/*',
+          // Block all 20i.com domains
+          '*://20i.com/*',
       ],
     },
     [],
