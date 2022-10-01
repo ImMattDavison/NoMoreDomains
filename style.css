@@ -19,3 +19,21 @@ body {
   border-top: 1px solid #007bff;
   border-bottom: 3px solid orangered;
 }
+
+.switch-button {
+  appearance: none;
+  border: none;
+  background: #007bff;
+  color: white;
+  font-weight: 500;
+  padding: 8px;
+  font-size: 15px;
+}
+
+.switch-button:hover {
+  background: #208cff;
+}
+
+.switch-button:active {
+  background: #3c9aff
+}
