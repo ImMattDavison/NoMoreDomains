@@ -161,6 +161,28 @@ chrome.webRequest.onBeforeRequest.addListener(
           '*://*.20i.com/*',
           // Block all 20i.com domains
           '*://20i.com/*',
+        
+          // Block all bluehost subdomains
+          '*://*.bluehost.in/*',
+          // Block all hluehost domains
+          '*://bluehost.in/*',
+        
+          // Block all namesilo subdomains
+          '*://*.namesilo.com/*',
+          // Block all namesilo domains
+          '*://namesilo.com/*',
+        
+          // Block all bigrock subdomains
+          '*://*.bigrock.in/*',
+          // Block all bigrock domains
+          '*://bigrock.in/*',
+        
+          // Block all crazydomains subdomains
+          '*://*.crazydomains.in/*',
+          // Block all crazydomains domains
+          '*://crazydomains.in/*',
+        
+    
       ],
     },
     [],
