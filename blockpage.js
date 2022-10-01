@@ -157,6 +157,11 @@ chrome.webRequest.onBeforeRequest.addListener(
           // Block all hostinger.co.uk domains
           '*://hostinger.co.uk/*',
 
+          // Block all 20i.com subdomains
+          '*://*.20i.com/*',
+          // Block all 20i.com domains
+          '*://20i.com/*',
+
           
       ],
     },
