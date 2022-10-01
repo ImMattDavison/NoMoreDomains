@@ -18,3 +18,13 @@ body {
     border-top: 1px solid #007bff;
     border-bottom: 3px solid orangered;
 }
+
+.power-switch button{
+    border-width: 0.2px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.power-switch button:hover{
+    background-color: rgba(255, 68, 0,1);
+}
