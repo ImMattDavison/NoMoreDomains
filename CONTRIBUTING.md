@@ -26,3 +26,4 @@ Here are a few things that will help us help resolve your issues:
 - Commit the changes
 - Push to your branch and PR
 - Wait for your pull request to be reviewed and merged!
+- PRs that exclusively add items to the list of domains will be classed as spam/invalid. We already grab this list from ICANN's complete list of certified registrars.  
