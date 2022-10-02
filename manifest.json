@@ -17,7 +17,8 @@
   },
   "permissions": [
     "declarativeNetRequestWithHostAccess", 
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": ["*://*/*"],
   "content_security_policy": {

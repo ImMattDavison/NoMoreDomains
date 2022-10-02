@@ -1,6 +1,7 @@
 // Keep service worker alive
 let lifeline;
 const KEEP_ALIVE = "keepAlive";
+var DOMAIN_RULES_URL = "https://raw.githubusercontent.com/Rutuj-Runwal/NoMoreDomains/master/domains.json";
 
 keepAlive();
 
@@ -43,8 +44,9 @@ chrome.runtime.onConnect.addListener((port) => {
   }
 });
 
-// Handle web requests and block domain registrars
-fetch("/domains.json")
+// Fetch and add rules to declarativeNetRequest
+function fetchProtectionRules(url){
+  fetch(url)
   .then((res) => res.json())
   .then((domains) => {
     chrome.declarativeNetRequest.updateDynamicRules({
@@ -60,3 +62,44 @@ fetch("/domains.json")
       })),
     });
   });
+}
+
+// saveUpdateTime function sets the current date in chrome's local storage
+function saveUpdateTime() {
+  const tDate = new Date().toLocaleDateString();
+  chrome.storage.local.set({ run_day: tDate });
+}
+
+function performUpdate() {
+  try {
+    fetchProtectionRules(DOMAIN_RULES_URL);
+    console.log("Success: Rules Added");
+  } catch (err) {
+    console.log("Error fetching rules");
+  }
+}
+
+// Below code checks if a date is added to the chrome storage.
+// 1. If date is added, it compares it with current date and if they mismatch it runs the update
+// 2. If date is not added(or is undefined) then it performs an update[This will be the "first time" update] and sets the date
+try {
+  chrome.storage.local.get(['run_day'], function (result) {
+    let checkerDate = new Date().toLocaleDateString();
+    if (result.run_day === undefined) {
+      try {
+        saveUpdateTime();
+        performUpdate();
+        console.log("First Update Performed!");
+      } catch (err) { console.log("Error while fetching first-run data:E01!"); }
+    }
+    else if (result.run_day !== checkerDate) {
+      try {
+        saveUpdateTime();
+        performUpdate();
+        console.log("Updated Successfully!");
+      } catch (err) { console.log("Error while fetching subsequent data: E02!"); }
+    }
+  });
+} catch (err) {
+  console.log(err);
+}
