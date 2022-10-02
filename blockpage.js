@@ -45,22 +45,40 @@ chrome.runtime.onConnect.addListener((port) => {
 });
 
 // Fetch and add rules to declarativeNetRequest
-function fetchProtectionRules(url){
+function fetchProtectionRules(url,status){
   fetch(url)
   .then((res) => res.json())
   .then((domains) => {
-    chrome.declarativeNetRequest.updateDynamicRules({
-      removeRuleIds: domains.map((_, index) => index + 1),
-      addRules: domains.map((domain, index) => ({
-        id: index + 1,
-        priority: 1,
-        action: { type: "redirect", redirect: { url: "https://google.com/" } },
-        condition: {
-          urlFilter: domain,
-          resourceTypes: ["main_frame"],
-        },
-      })),
-    });
+    if(status==="redirect"){
+      console.log("Disabling domains!");
+      chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: domains.map((_, index) => index + 1),
+        addRules: domains.map((domain, index) => ({
+          id: index + 1,
+          priority: 1,
+          action: { type: "redirect", redirect: { url: "https://google.com/" } },
+          condition: {
+            urlFilter: domain,
+            resourceTypes: ["main_frame"],
+          },
+        })),
+      });
+    }
+    else if(status==="off"){
+      console.log("Allowing domains!");
+      chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: domains.map((_, index) => index + 1),
+        addRules: domains.map((domain, index) => ({
+          id: index + 1,
+          priority: 2,
+          action: { type: "allow"},
+          condition: {
+            urlFilter: domain,
+            resourceTypes: ["main_frame"],
+          },
+        })),
+      });
+    }
   });
 }
 
@@ -70,9 +88,9 @@ function saveUpdateTime() {
   chrome.storage.local.set({ run_day: tDate });
 }
 
-function performUpdate() {
+function performUpdate(status) {
   try {
-    fetchProtectionRules(DOMAIN_RULES_URL);
+    fetchProtectionRules(DOMAIN_RULES_URL,status);
     console.log("Success: Rules Added");
   } catch (err) {
     console.log("Error fetching rules");
@@ -88,14 +106,14 @@ try {
     if (result.run_day === undefined) {
       try {
         saveUpdateTime();
-        performUpdate();
+        performUpdate("redirect");
         console.log("First Update Performed!");
       } catch (err) { console.log("Error while fetching first-run data:E01!"); }
     }
     else if (result.run_day !== checkerDate) {
       try {
         saveUpdateTime();
-        performUpdate();
+        performUpdate("redirect");
         console.log("Updated Successfully!");
       } catch (err) { console.log("Error while fetching subsequent data: E02!"); }
     }
@@ -103,3 +121,18 @@ try {
 } catch (err) {
   console.log(err);
 }
+
+// Message passing between popup.js and this script to enable toggle(on/off) functionality
+chrome.runtime.onMessage.addListener(
+  function (request) {
+    if (request.NMD_status==="on"){
+      performUpdate("redirect");
+    }
+    else if (request.NMD_status === "off"){
+      performUpdate("off");
+    }
+    else{
+      performUpdate("redirect");
+    }
+  }
+);
