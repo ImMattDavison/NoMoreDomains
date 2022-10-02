@@ -29,11 +29,11 @@ function toggleNMD() {
             }
         }
         else{
-            chrome.storage.local.set({ toggle_value: "on" });
-            chrome.runtime.sendMessage({ NMD_status: "on" });
-            span_ToggleState.innerText = "ON";
+            chrome.storage.local.set({ toggle_value: "off" });
+            chrome.runtime.sendMessage({ NMD_status: "off" });
+            span_ToggleState.innerText = "OFF";
             nvm_wrapper.style.display = "block";
-            span_ToggleState.style.color = "green";
+            span_ToggleState.style.color = "red";
         }
     });
 }
