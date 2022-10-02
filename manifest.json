@@ -15,7 +15,11 @@
     "48": "assets/icon48.png",
     "128": "assets/icon128.png"
   },
-  "permissions": ["declarativeNetRequestWithHostAccess","storage"],
+  "permissions": [
+    "declarativeNetRequestWithHostAccess", 
+    "scripting",
+    "storage"
+  ],
   "host_permissions": ["*://*/*"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; script-src-elem 'self'; object-src 'self'"
