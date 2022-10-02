@@ -13,5 +13,5 @@ NoMoreDomains is only in early development, we plan to add a redirect to a brand
 
 When making contributions please consider and follow our [Contributing Guidelines](https://github.com/immattdavison/NoMoreDomains/blob/master/contributing.md).
 <footer>
-&copy;<em> 2022 </em> NoMoreDomains
+&copy;<em> 2022 </em>NoMoreDomains
 </footer>
