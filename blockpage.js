@@ -51,7 +51,7 @@ fetch("/domains.json")
         priority: 1,
         action: { type: "redirect", redirect: { url: "https://google.com/" } },
         condition: {
-          urlFilter: `*://*.${domain}/*`,
+          urlFilter: domain,
           resourceTypes: ["main_frame"],
         },
       })),
