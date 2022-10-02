@@ -8,33 +8,17 @@ if (span_ToggleState.innerText === "Initialized") {
 }
 function toggleNMD() {
     chrome.storage.local.get(['toggle_value'], (data) => {
-        if (data.toggle_value != undefined) {
-            if (data.toggle_value === "on") {
-                // toggle_value was set to on: We will toggle it
-                // Setting toggle_value to off
-                chrome.storage.local.set({ toggle_value: "off" });
-                chrome.runtime.sendMessage({ NMD_status: "off" });
-                span_ToggleState.innerText = "OFF";
-                nvm_wrapper.style.display = "block";
-                span_ToggleState.style.color = "red";
-            }
-            else if (data.toggle_value === "off") {
-                // toggle_value was set to off: We will toggle it
-                // Setting toggle_value to on
-                chrome.storage.local.set({ toggle_value: "on" });
-                chrome.runtime.sendMessage({ NMD_status: "on" });
-                span_ToggleState.innerText = "ON";
-                nvm_wrapper.style.display = "block";
-                span_ToggleState.style.color = "green";
-            }
-        }
-        else{
-            chrome.storage.local.set({ toggle_value: "off" });
-            chrome.runtime.sendMessage({ NMD_status: "off" });
-            span_ToggleState.innerText = "OFF";
-            nvm_wrapper.style.display = "block";
-            span_ToggleState.style.color = "red";
-        }
+
+      // Toggle the value to on/off from previous value
+      const toggledValue = (data.toggle_value === 'on' || data.toggle_value === undefined) ? 'off' : 'on';
+      chrome.storage.local.set({ toggle_value: toggledValue });
+      chrome.runtime.sendMessage({ NMD_status: toggledValue });
+      span_ToggleState.innerText = toggledValue.toUpperCase();
+      nvm_wrapper.style.display = 'inline-block';
+
+      // Toggle the color to on/off from previous value
+      const toggledColorCode = (data.toggle_value === 'on') ? 'red' : 'green';
+      span_ToggleState.style.color = toggledColorCode;
     });
 }
 Button_Toggle.addEventListener("click",toggleNMD);

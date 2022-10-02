@@ -102,37 +102,16 @@ function performUpdate(status) {
 // 2. If date is not added(or is undefined) then it performs an update[This will be the "first time" update] and sets the date
 try {
   chrome.storage.local.get(['run_day'], function (result) {
-    let checkerDate = new Date().toLocaleDateString();
-    if (result.run_day === undefined) {
-      try {
-        saveUpdateTime();
-        performUpdate("redirect");
-        console.log("First Update Performed!");
-      } catch (err) { console.log("Error while fetching first-run data:E01!"); }
-    }
-    else if (result.run_day !== checkerDate) {
-      try {
-        saveUpdateTime();
-        performUpdate("redirect");
-        console.log("Updated Successfully!");
-      } catch (err) { console.log("Error while fetching subsequent data: E02!"); }
-    }
+    saveUpdateTime();
+    performUpdate("off");
+    console.log((!result.run_day) ? "First Update Performed!" : "Updated Successfully!");
   });
 } catch (err) {
   console.log(err);
 }
 
 // Message passing between popup.js and this script to enable toggle(on/off) functionality
-chrome.runtime.onMessage.addListener(
-  function (request) {
-    if (request.NMD_status==="on"){
-      performUpdate("redirect");
-    }
-    else if (request.NMD_status === "off"){
-      performUpdate("off");
-    }
-    else{
-      performUpdate("redirect");
-    }
-  }
-);
+chrome.runtime.onMessage.addListener((request) => {
+  const status = request.NMD_status === 'off' ? 'off' : 'redirect';
+  performUpdate(status);
+});
