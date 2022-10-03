@@ -18,7 +18,7 @@ async function keepAlive() {
       chrome.tabs.onUpdated.removeListener(retryOnTabUpdate);
       return;
     } catch (error) {
-      console.error("NO_MORE_DOMAINS:ERROR ", error);
+      console.log("NO_MORE_DOMAINS:ERROR ", error);
     }
   }
   chrome.tabs.onUpdated.addListener(retryOnTabUpdate);
