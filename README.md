@@ -22,3 +22,7 @@ NoMoreDomains blocks all the best-known domain registrars and domain name auctio
 * This project is **Hacktoberfest 2022** accepted !
 
   Happy hacking :D
+
+  ### ⭐Don't forget to leave a star!!⭐😃
+ 
+ -----
