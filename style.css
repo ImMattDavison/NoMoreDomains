@@ -1,15 +1,18 @@
 html,
 body {
-    width: 420px;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 420px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #007bff;
 }
 
 body {
-    padding-left: 0px;
-    padding-right: 0px;
-    margin: auto;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin: auto;
 }
+
 .container{
     display: flex;
     justify-content: center;
@@ -28,9 +31,78 @@ body {
     border-top: 1px solid #007bff;
     border-bottom: 3px solid orangered;
 }
-
-.power-switch button{
-    width: 170px;
-    height: 40px;
-    cursor: pointer;
+.title-block {
+  background-color: #007bff;
+  color: white;
+  padding-block: 1em;
+  border-top: 1px solid #007bff;
+  border-bottom: 3px solid orangered;
 }
+
+
+/* Switch/Toggle button css 👇*/
+* {
+  --switch-height: 25px;
+  --switch-padding: 4px;
+  --switch-width: calc((var(--switch-height) * 2) - var(--switch-padding));
+  --slider-height: calc(var(--switch-height) - var(--switch-padding));
+  --slider-on: calc(var(--switch-height) - var(--switch-padding));
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: var(--switch-width);
+  height: var(--switch-height);
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: red;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: var(--slider-height);
+  width: var(--slider-height);
+  left: calc(var(--switch-padding) / 2);
+  bottom: calc(var(--switch-padding) / 2);
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: green;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px  green;
+}
+
+input:checked+.slider:before {
+  transform: translateX(var(--slider-on));
+}
+
+.slider.round {
+  border-radius: var(--slider-height);
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/* Switch/Toggle button css 👆 */
+
