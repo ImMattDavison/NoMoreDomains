@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="style.css" />
 
     <title>No More Domains</title>
+    <style>
+      </style>
   </head>
 
   <body>
@@ -17,12 +19,12 @@
       <p style="margin-bottom: 1.75em; margin-top: 0.2em">
         Stop registering new domains.
       </p>
-      <h3 style="margin-bottom: 1.75em; margin-top: 0.2em" id="NVM_statusWrapper">
-        Status: <span id="NVMtoggle_status" style="color: rgb(0, 71, 0);">Initialized</span>
-      </h3>
     </div>
-    <div class="power-switch">
-      <button id="toggleButton">Toggle NMD</button>
+    <div class="power-switch" style="margin: 3px;">
+      <label class="switch">
+        <input type="checkbox"  id="toggleButton" checked>
+        <span class="slider round"></span>
+      </label>
     </div>
     <script src="blockpage.js" type="text/javascript"></script>
     <script src="popup.js" type="text/javascript"></script>
