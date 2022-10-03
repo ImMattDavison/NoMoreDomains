@@ -1,7 +1,7 @@
 <h1 align="center">NoMoreDomains</h1>
 
 
-### Need to stop buying domain names?
+**Need to stop buying domain names?**
 
 NoMoreDomains blocks all the best-known domain registrars and domain name auction sites to help you stop buying so many domains!
 
@@ -19,10 +19,7 @@ NoMoreDomains blocks all the best-known domain registrars and domain name auctio
 
 * When making contributions please consider and follow our [Contributing Guidelines](https://github.com/immattdavison/NoMoreDomains/blob/master/contributing.md).
 -------
-* This project is **Hacktoberfest 2022** accepted !
 
-  Happy hacking :D
-
-  ### ⭐Don't forget to leave a star!!⭐😃
+  ### ⭐Don't forget to leave a star!!⭐
  
  -----
