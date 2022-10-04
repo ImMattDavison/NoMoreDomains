@@ -49,7 +49,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: red;
+  min-width:80px;
+  background-color: #007bff;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -58,31 +59,57 @@ body {
   content: "";
   position: absolute;
   height: var(--slider-height);
-  width: var(--slider-height);
+  width: 35px;
   left: calc(var(--switch-padding) / 2);
   bottom: calc(var(--switch-padding) / 2);
-  background-color: white;
   -webkit-transition: .4s;
+  background-color:orangered;
   transition: .4s;
+  z-index:0;
 }
 
 input:checked+.slider {
-  background-color: green;
+  background-color: #007bff;
+  ;
 }
 
-input:focus+.slider {
+/* input:focus+.slider {
   box-shadow: 0 0 1px  green;
-}
+} */
 
 input:checked+.slider:before {
   transform: translateX(var(--slider-on));
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(40px);
 }
 
-.slider.round {
+.slider {
+  padding-top: 0.22em;
+}
+
+.on , .off {
+  position: relative;
+  font-size: 12px;
+  margin:0 10px;
+}
+
+.on {
+  position: relative;
+  z-index: 1;
+}
+.off {
+  position: relative;
+}
+
+
+
+/* .slider.round {
   border-radius: var(--slider-height);
+
 }
 
 .slider.round:before {
   border-radius: 50%;
-}
+} */
 /* Switch/Toggle button css 👆 */
