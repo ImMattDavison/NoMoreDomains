@@ -1,14 +1,14 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "No More Domains",
   "version": "1.0.0",
   "description": "Need to stop buying domain names? No More Domains blocks all the best known domain registrars and domain name auction sites to help you stop buying so many domains!",
-  "action": {
+  "browser_action": {
     "default_icon": "assets/icon.png",
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "blockpage.js"
+    "scripts": ["blockpage.js"]
   },
   "icons": {
     "16": "assets/icon16.png",
@@ -16,12 +16,12 @@
     "128": "assets/icon128.png"
   },
   "permissions": [
-    "declarativeNetRequestWithHostAccess", 
+    "webRequest",
+    "webRequestBlocking",
     "scripting",
-    "storage"
+    "storage",
+    "*://*/*"
   ],
-  "host_permissions": ["*://*/*"],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; script-src-elem 'self'; object-src 'self'"
-  }
+  "content_security_policy": "script-src 'self'; script-src-elem 'self'; object-src 'self'"
+  
 }

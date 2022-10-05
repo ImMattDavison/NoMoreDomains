@@ -7,21 +7,21 @@ keepAlive();
 
 async function keepAlive() {
   if (lifeline) return;
-  for (const tab of await chrome.tabs.query({ url: "*://*/*" })) {
+  for (const tab of await browser.tabs.query({ url: "*://*/*" })) {
     try {
-      await chrome.scripting.executeScript({
+      await browser.scripting.executeScript({
         target: { tabId: tab.id },
         func: () => {
-          chrome.runtime.connect({ name: KEEP_ALIVE });
+          browser.runtime.connect({ name: KEEP_ALIVE });
         },
       });
-      chrome.tabs.onUpdated.removeListener(retryOnTabUpdate);
+      browser.tabs.onUpdated.removeListener(retryOnTabUpdate);
       return;
     } catch (error) {
       console.log("NO_MORE_DOMAINS:ERROR ", error);
     }
   }
-  chrome.tabs.onUpdated.addListener(retryOnTabUpdate);
+  browser.tabs.onUpdated.addListener(retryOnTabUpdate);
 }
 
 function keepAliveForced() {
@@ -36,7 +36,7 @@ async function retryOnTabUpdate(tabId, info, tab) {
   }
 }
 
-chrome.runtime.onConnect.addListener((port) => {
+browser.runtime.onConnect.addListener((port) => {
   if (port.name === KEEP_ALIVE) {
     lifeline = port;
     setTimeout(keepAliveForced, 295e3);
@@ -49,43 +49,33 @@ function fetchProtectionRules(url,status){
   fetch(url)
   .then((res) => res.json())
   .then((domains) => {
+    for (var i=0; i<domains.length; i++){
+      domains[i]="*://www."+domains[i]+"/*"
+    }
+    function redirectdom(details) { if (!domains.includes(details.url)) {
+      return {redirectUrl: 'http://google.com'};
+      }}
     if(status==="redirect"){
       console.log("Disabling domains!");
-      chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: domains.map((_, index) => index + 1),
-        addRules: domains.map((domain, index) => ({
-          id: index + 1,
-          priority: 1,
-          action: { type: "redirect", redirect: { url: "https://google.com/" } },
-          condition: {
-            urlFilter: domain,
-            resourceTypes: ["main_frame"],
-          },
-        })),
-      });
+      console.log(domains);
+      browser.webRequest.onBeforeRequest.addListener(
+        redirectdom,
+        {urls: domains},
+        ["blocking"]
+      );
+      
     }
     else if(status==="off"){
       console.log("Allowing domains!");
-      chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: domains.map((_, index) => index + 1),
-        addRules: domains.map((domain, index) => ({
-          id: index + 1,
-          priority: 2,
-          action: { type: "allow"},
-          condition: {
-            urlFilter: domain,
-            resourceTypes: ["main_frame"],
-          },
-        })),
-      });
+      browser.webRequest.onBeforeRequest.removeListener(redirectdom);
     }
   });
 }
 
-// saveUpdateTime function sets the current date in chrome's local storage
+// saveUpdateTime function sets the current date in browser's local storage
 function saveUpdateTime() {
   const tDate = new Date().toLocaleDateString();
-  chrome.storage.local.set({ run_day: tDate });
+  browser.storage.local.set({ run_day: tDate });
 }
 
 function performUpdate(status) {
@@ -97,11 +87,11 @@ function performUpdate(status) {
   }
 }
 
-// Below code checks if a date is added to the chrome storage.
+// Below code checks if a date is added to the browser storage.
 // 1. If date is added, it compares it with current date and if they mismatch it runs the update
 // 2. If date is not added(or is undefined) then it performs an update[This will be the "first time" update] and sets the date
 try {
-  chrome.storage.local.get(['run_day'], function (result) {
+  browser.storage.local.get(['run_day'], function (result) {
     let checkerDate = new Date().toLocaleDateString();
     if (result.run_day === undefined) {
       try {
@@ -123,7 +113,7 @@ try {
 }
 
 // Message passing between popup.js and this script to enable toggle(on/off) functionality
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
   function (request) {
     if (request.NMD_status==="on"){
       performUpdate("redirect");
