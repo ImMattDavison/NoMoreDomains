@@ -1,5 +1,10 @@
 <h1 align="center">NoMoreDomains</h1>
 
+<div align="center">
+    <img alt="Desktop" title="#Desktop" src="./assets/mock.jpg" width="680px" />
+</div>
+
+<br />
 
 **Need to stop buying domain names?**
 
