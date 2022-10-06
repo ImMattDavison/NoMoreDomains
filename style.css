@@ -40,6 +40,13 @@ body {
 }
 
 
+
+.subTitle {
+  margin-bottom: 1.75em; 
+  margin-top: 0.2em;
+}
+
+
 /* Switch/Toggle button css 👇*/
 * {
   --switch-height: 25px;
@@ -48,6 +55,11 @@ body {
   --slider-height: calc(var(--switch-height) - var(--switch-padding));
   --slider-on: calc(var(--switch-height) - var(--switch-padding));
 }
+
+.power-switch {
+  margin: 3px;
+}
+
 .switch {
   position: relative;
   display: inline-block;
