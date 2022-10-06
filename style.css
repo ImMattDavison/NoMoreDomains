@@ -31,13 +31,14 @@ body {
 }
 
 .power-switch {
-  margin: 3px;
+  margin: auto;
 }
 
 .switch {
+  display:block;
   position: relative;
-  display: inline-block;
-  width: var(--switch-width);
+  margin:auto;
+  width: 75px;
   height: var(--switch-height);
 }
 
