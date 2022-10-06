@@ -30,6 +30,10 @@ body {
   --slider-on: calc(var(--switch-height) - var(--switch-padding));
 }
 
+.power-switch {
+  margin: 3px;
+}
+
 .switch {
   position: relative;
   display: inline-block;
