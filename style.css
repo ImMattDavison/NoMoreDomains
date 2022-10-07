@@ -21,15 +21,6 @@ body {
   border-bottom: 3px solid orangered;
 }
 
-.title {
-  margin-bottom: 0.2em;
-}
-
-.subTitle {
-  margin-bottom: 1.75em; 
-  margin-top: 0.2em;
-}
-
 /* Switch/Toggle button css 👇*/
 * {
   --switch-height: 25px;
@@ -40,13 +31,14 @@ body {
 }
 
 .power-switch {
-  margin: 3px;
+  margin: auto;
 }
 
 .switch {
+  display:block;
   position: relative;
-  display: inline-block;
-  width: var(--switch-width);
+  margin:auto;
+  width: 75px;
   height: var(--switch-height);
 }
 
@@ -63,40 +55,56 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: red;
+  min-width: 80px;
+  background-color: #0054ae;
   -webkit-transition: .4s;
   transition: .4s;
+  padding-top: 0.15em;
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .slider:before {
   content: "";
+  padding-top: 0px;
   position: absolute;
   height: var(--slider-height);
-  width: var(--slider-height);
+  width: 35px;
   left: calc(var(--switch-padding) / 2);
   bottom: calc(var(--switch-padding) / 2);
-  background-color: white;
   -webkit-transition: .4s;
+  background-color: #a4c8ee;
   transition: .4s;
+  z-index: 0;
 }
 
 input:checked+.slider {
-  background-color: green;
+  background-color: #0054ae  ;
 }
 
-input:focus+.slider {
-  box-shadow: 0 0 1px  green;
-}
 
 input:checked+.slider:before {
   transform: translateX(var(--slider-on));
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(40px);
 }
 
-.slider.round {
-  border-radius: var(--slider-height);
+.on, .off {
+  position: relative;
+  font-size: 12px;
+  user-select: none;
 }
 
-.slider.round:before {
-  border-radius: 50%;
+input:checked + .slider > .off {
+  color: white  ;
 }
-/* Switch/Toggle button css 👆 */
+
+input:not(:checked) +.slider > .on {
+  color: white;
+}
+
+.on {
+  z-index: 1;
+}
