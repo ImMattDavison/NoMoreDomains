@@ -59,11 +59,15 @@ body {
   background-color: #0054ae;
   -webkit-transition: .4s;
   transition: .4s;
+  padding-top: 0.15em;
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .slider:before {
   content: "";
-  padding-top:0px;
+  padding-top: 0px;
   position: absolute;
   height: var(--slider-height);
   width: 35px;
@@ -79,9 +83,6 @@ input:checked+.slider {
   background-color: #0054ae  ;
 }
 
-/* input:focus+.slider {
-  box-shadow: 0 0 1px  green;
-} */
 
 input:checked+.slider:before {
   transform: translateX(var(--slider-on));
@@ -90,15 +91,7 @@ input:checked+.slider:before {
   transform: translateX(40px);
 }
 
-.slider {
-  padding-top: 0.15em;
-  display: inline-flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.on,
-.off {
+.on, .off {
   position: relative;
   font-size: 12px;
   user-select: none;
@@ -113,22 +106,5 @@ input:not(:checked) +.slider > .on {
 }
 
 .on {
-  position: relative;
   z-index: 1;
 }
-
-.off {
-  position: relative;
-}
-
-
-
-/* .slider.round {
-  border-radius: var(--slider-height);
-
-}
-
-.slider.round:before {
-  border-radius: 50%;
-} */
-/* Switch/Toggle button css 👆 */
