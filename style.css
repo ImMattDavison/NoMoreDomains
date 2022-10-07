@@ -63,6 +63,7 @@ body {
   display: inline-flex;
   justify-content: space-around;
   align-items: center;
+  text-transform: uppercase;
 }
 
 .slider:before {
