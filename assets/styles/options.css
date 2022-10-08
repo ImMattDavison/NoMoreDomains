@@ -95,7 +95,7 @@ body{
     -ms-flex-align: stretch;
     align-items: stretch;
     min-width: 100%;
-    margin-block: 1em;
+    margin-top: 1em;
     border: none;
     justify-content: center;
 }
@@ -104,6 +104,7 @@ body{
     border-top-left-radius: .5em;
     border-bottom-left-radius: .5em;
     padding: .5em;
+    width: 70%;
 }
 .whitelist-form input:focus, .whitelist-form input:active, .whitelist-form input:focus-visible{
     transition: all .2s ease;
@@ -120,6 +121,7 @@ body{
     text-transform: uppercase;
     padding: .5em;
     cursor: pointer;
+    width: 30%;
 }
 #WhiteList_Erase_Button{
     width: 100%;
@@ -134,5 +136,5 @@ body{
     margin-top: .5em;
 }
 #whiteList_domains_table{
-    margin-block: .5em;
+    margin-block: 1em;
 }
