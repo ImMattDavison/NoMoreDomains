@@ -21,6 +21,16 @@ body {
   border-bottom: 3px solid orangered;
 }
 
+#Openoptions {
+  float: right;
+  width: 15px !important;
+  height: 15px !important;
+  cursor: pointer;
+  padding-right: 7px !important;
+  margin-top: 5px !important;
+  margin-right: 5px !important;
+}
+
 /* Switch/Toggle button css 👇*/
 * {
   --switch-height: 25px;

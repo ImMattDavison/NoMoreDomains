@@ -1,5 +1,6 @@
 // Script to enable functionality for toggle(turning extension on/off)
 var Button_Toggle = document.getElementById("toggleButton");
+var Options_Button = document.getElementById("Openoptions");
 
 // Update toggle button: on/off in the UI using chrome storage value
 chrome.storage.local.get(['toggle_value'], (data) => {
@@ -31,5 +32,15 @@ function toggleNMD() {
         chrome.runtime.sendMessage({ NMD_status: "off" });
         Button_Toggle.checked = false;
     }
+}
+// Open options(settings page) when clicked on settings in the popup
+if (Options_Button != undefined) {
+    Options_Button.addEventListener('click', function () {
+        if (chrome.runtime.openOptionsPage) {
+            chrome.runtime.openOptionsPage();
+        } else {
+            window.open(chrome.runtime.getURL('options.html'));
+        }
+    });
 }
 Button_Toggle.addEventListener("change",toggleNMD);
