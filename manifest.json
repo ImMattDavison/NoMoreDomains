@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "No More Domains",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Need to stop buying domain names? No More Domains blocks all the best known domain registrars and domain name auction sites to help you stop buying so many domains!",
   "action": {
     "default_icon": "assets/icon.png",

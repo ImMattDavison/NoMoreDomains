@@ -59,8 +59,8 @@ function fetchProtectionRules(url,status){
           priority: 1,
           action: { type: "redirect", redirect: { url: "https://google.com/" } },
           condition: {
-            urlFilter: domain,
-            resourceTypes: ["main_frame"],
+            urlFilter: "||"+domain+"^",
+            resourceTypes: ["main_frame","sub_frame"],
           },
         })),
       });
@@ -74,8 +74,8 @@ function fetchProtectionRules(url,status){
           priority: 2,
           action: { type: "allow"},
           condition: {
-            urlFilter: domain,
-            resourceTypes: ["main_frame"],
+            urlFilter: "||"+domain+"^",
+            resourceTypes: ["main_frame","sub_frame"],
           },
         })),
       });
