@@ -9,27 +9,29 @@
 <body>
     <div class="container">
         <h1 class="title">Options</h1>
-        <div class="whitelist-container">
-            <div>
-                <h2>Whitelist Domains</h2>
-                <p>Whitelisted domains are not redirected by NoMoreDomains</p>
-            </div>
-            <div id="optionsPageDiv">
+        <div class="options-grid">
+            <div class="whitelist-container">
                 <div>
-                    <input type="text" id="whiteListDomain" placeholder="Add domain to whitelist">
-                    <button id="WhiteList_Submit_Button">Whitelist</button>
+                    <h2>Whitelist Domains</h2>
+                    <p>Whitelisted domains are not redirected by NoMoreDomains</p>
                 </div>
-                <br />
-                <table id="whiteList_domains_table">
-                    <tr>
-                        <th>Whitelisted Domains</th>
-                    </tr>
-                    <!-- Display all whitelisted domains here -->
-                    <tbody id="whiteList_domains">
-                    </tbody>
-                </table>
-                <br />
-                <button id="WhiteList_Erase_Button" style="width: 90px;height:25px;">Remove</button>
+                <div id="optionsPageDiv">
+                    <div>
+                        <input type="text" id="whiteListDomain" placeholder="Add domain to whitelist">
+                        <button id="WhiteList_Submit_Button">Whitelist</button>
+                    </div>
+                    <br />
+                    <table id="whiteList_domains_table">
+                        <tr>
+                            <th>Whitelisted Domains</th>
+                        </tr>
+                        <!-- Display all whitelisted domains here -->
+                        <tbody id="whiteList_domains">
+                        </tbody>
+                    </table>
+                    <br />
+                    <button id="WhiteList_Erase_Button" style="width: 90px;height:25px;">Remove</button>
+                </div>
             </div>
         </div>
     </div>
