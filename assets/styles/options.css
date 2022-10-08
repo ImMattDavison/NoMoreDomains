@@ -7,6 +7,9 @@
     max-width: 100vw;
     scroll-behavior: smooth;
 }
+body{
+    background-color: #007bff;
+}
 
 /* CONTAINERS */
 .container {
@@ -41,8 +44,12 @@
 .title{
     font-size: 3.5em;
     font-weight: 600;
-    color: #000;
+    color: #fff;
     text-align: center;
-    margin: 1em;
+    margin-block: 1em;
     text-transform: uppercase;
+    background-color: #212b37a2;
+    padding: .5em;
+    width: 100%;
+    border-radius: .5em;
 }
