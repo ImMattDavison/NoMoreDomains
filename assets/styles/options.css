@@ -37,3 +37,12 @@
         max-width: 1175px;
     }
 }
+
+.title{
+    font-size: 3.5em;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+    margin: 1em;
+    text-transform: uppercase;
+}
