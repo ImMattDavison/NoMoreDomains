@@ -82,3 +82,6 @@ body{
     cursor: pointer;
     margin-top: .5em;
 }
+#whiteList_domains_table{
+    margin-block: .5em;
+}
