@@ -54,10 +54,31 @@ body{
     border-radius: .5em;
 }
 
+.options-grid{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+/* WHITELIST */
 .whitelist-container{
     background-color: #212b37a2;
     padding: 1.5em;
     border-radius: 1.5em;
     margin-block: 1em;
     color: #fff;
+}
+#WhiteList_Erase_Button{
+    width: 100%;
+    background-color: #fff;
+    color: #212b37;
+    border: none;
+    border-radius: .5em;
+    padding: .5em;
+    font-size: 1.5em;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: .5em;
 }
