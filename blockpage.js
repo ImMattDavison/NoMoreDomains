@@ -50,6 +50,7 @@ function fetchProtectionRules(url,status){
   .then((res) => res.json())
   .then((domains) => {
     if(status==="redirect"){
+      chrome.storage.local.set({ "rules_count": domains.length }); // Save the count(number) of rules
       console.log("Disabling domains!");
       chrome.declarativeNetRequest.updateDynamicRules({
         removeRuleIds: domains.map((_, index) => index + 1),

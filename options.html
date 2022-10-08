@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NMD Options Page</title>
+    <style>
+        body{
+            font-size: 20px;
+        }
+        button{
+            cursor: pointer;
+            border-radius: 20px;
+            outline: none;
+            border: none;
+            font-size: 17px;
+            width: 120px;
+            height: 30px;
+            background-color: #007BFF;
+            color: white;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 5px;
+            font-size: 17px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        #optionsPageDiv{
+            margin-left: 3%;
+        }
+        input{
+            border-radius: 20px;
+            width: 200px;
+            height: 30px;
+            padding: 3px;
+            outline: none;
+            border: 3px solid green;
+            font-size: 17px;
+        }
+        #whiteList_domains_table,#WhiteList_Erase_Button{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div style="margin: 1%;">
+            <div style="font-weight:bold;font-size: 110%;">Whitelist Domains</div>
+            <div style="font-size: 13px;margin: 3px;">Whitelisted domains are not redirected by NoMoreDomains</div>
+        </div>
+        <div  id="optionsPageDiv">
+            <div>
+                <input type="text" id="whiteListDomain" placeholder="Add domain to whitelist">
+                <button id="WhiteList_Submit_Button">Whitelist</button>
+            </div>
+            <br />
+            <table id="whiteList_domains_table">
+                <tr>
+                    <th>Whitelisted Domains</th>
+                </tr>
+                <!-- Display all whitelisted domains here -->
+                <tbody id="whiteList_domains">
+                </tbody>
+            </table>
+            <br />
+            <button id="WhiteList_Erase_Button" style="width: 90px;height:25px;">Remove</button>
+        </div>
+    </div>
+    <script src="./options.js"></script>
+</body>
+
+</html>

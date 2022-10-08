@@ -10,6 +10,7 @@
   "background": {
     "service_worker": "blockpage.js"
   },
+  "options_page": "options.html",
   "icons": {
     "16": "assets/icon16.png",
     "48": "assets/icon48.png",
