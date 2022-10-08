@@ -60,7 +60,7 @@ function fetchProtectionRules(url,status){
           action: { type: "redirect", redirect: { url: "https://google.com/" } },
           condition: {
             urlFilter: "||"+domain+"^",
-            resourceTypes: ["main_frame","sub_frame"],
+            resourceTypes: ["main_frame", "sub_frame"],
           },
         })),
       });
