@@ -94,9 +94,8 @@ body{
     -webkit-box-align: stretch;
     -ms-flex-align: stretch;
     align-items: stretch;
-    width: 100%;
+    min-width: 100%;
     margin-top: 1em;
-    width: 100%;
     border: none;
 }
 .whitelist-form input{
@@ -104,6 +103,10 @@ body{
     border-top-left-radius: .5em;
     border-bottom-left-radius: .5em;
     padding: .5em;
+}
+.whitelist-form input:focus, .whitelist-form input:active, .whitelist-form input:focus-visible{
+    transition: all .2s ease;
+    outline: none;
 }
 .whitelist-form button{
     border: none;
