@@ -53,3 +53,10 @@ body{
     width: 100%;
     border-radius: .5em;
 }
+
+.whitelist-container{
+    background-color: #212b37a2;
+    padding: 1.5em;
+    border-radius: 1.5em;
+    margin-block: 1em;
+}
