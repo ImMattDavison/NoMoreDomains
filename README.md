@@ -24,4 +24,4 @@ NoMoreDomains blocks all the best-known domain registrars and domain name auctio
   <img src="https://contrib.rocks/image?repo=immattdavison/NoMoreDomains" />
 </a>
 
-  ### ⭐Don't forget to leave a star!!⭐
+<h3 align="center">⭐Don't forget to leave a star!!⭐</h3>
