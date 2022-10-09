@@ -18,6 +18,12 @@ NoMoreDomains blocks all the best-known domain registrars and domain name auctio
 * If you wish to make a contribution please visit the [issues](https://github.com/immattdavison/NoMoreDomains/issues) and find issues that need assistance or create one of your own!
 
 * When making contributions please consider and follow our [Contributing Guidelines](https://github.com/immattdavison/NoMoreDomains/blob/master/CONTRIBUTING.md).
+
+## Thanks to our Contributors
+<a href="https://github.com/immattdavison/NoMoreDomains/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=immattdavison/NoMoreDomains" />
+</a>
+
 -------
 
   ### ⭐Don't forget to leave a star!!⭐
