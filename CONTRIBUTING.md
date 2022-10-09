@@ -29,4 +29,4 @@ Here are a few things that will help us help resolve your issues:
 - PRs that exclusively add items to the list of domains will be classed as spam/invalid. We already grab this list from ICANN's complete list of certified registrars.  
 
 Note:
-If the PR you have made is considered to be a major one, once it has the `enhancement` label, please increase the version of the extension in [manifest.json](https://github.com/immattdavison/NoMoreDomains/blob/master/manifest.json#L4).
+If the PR you have made contains a major update, once it has the `enhancement` label, please increase the version of the extension in [manifest.json](https://github.com/immattdavison/NoMoreDomains/blob/master/manifest.json#L4).
