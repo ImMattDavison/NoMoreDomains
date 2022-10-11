@@ -9,7 +9,7 @@ Before opening an issue, please be sure that your issue hasn't already been aske
 Here are a few things that will help us to resolve your issues:
 
 - A descriptive title that gives an idea of what your issue refers to
-- A thorough description of the issue, (one word descriptions are very hard to understand)
+- A thorough description of the issue, (one-word descriptions are very hard to understand)
 - Screenshots (if appropriate)
 - Links (if appropriate)
   <br><br>
