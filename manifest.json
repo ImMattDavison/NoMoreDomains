@@ -10,6 +10,13 @@
   "background": {
     "service_worker": "blockpage.js"
   },
+  "content_scripts": [
+      { 
+        "js": ["inject_block.js"],
+        "run_at": "document_start",
+        "matches": ["<all_urls>"]
+      }
+  ],
   "options_page": "options.html",
   "icons": {
     "16": "assets/icon16.png",
@@ -21,7 +28,13 @@
     "scripting",
     "storage"
   ],
-  "host_permissions": ["*://*/*"],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources":[
+    {
+      "resources": [ "block.html"],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; script-src-elem 'self'; object-src 'self'"
   }
