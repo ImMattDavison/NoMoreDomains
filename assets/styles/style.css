@@ -17,7 +17,10 @@ body {
   background-color: rgb(33, 33, 33);
   color: white;
   padding-block: 1em;
-  border-bottom: 3px solid orangered;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-image: linear-gradient(45deg, rgb(255, 96, 0), rgb(0, 123, 255) 75%) 1;
+
 }
 
 #Openoptions {
