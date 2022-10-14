@@ -57,7 +57,7 @@ function fetchProtectionRules(url,status){
         addRules: domains.map((domain, index) => ({
           id: index + 1,
           priority: 1,
-          action: { type: "redirect", redirect: { url: "https://google.com/" } },
+          action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
           condition: {
             urlFilter: "||"+domain+"^",
             resourceTypes: ["main_frame", "sub_frame"],

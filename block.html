@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RR Adblocker:Malware Blocked</title>
+    <style>
+        h3{color:red;}
+        body{
+        background-color: lightblue !important;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size: 105% !important;
+        font-family: 'Segoe UI', Arial, Helvetica, 'Lucida Sans', sans-serif;
+        }
+        #info{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction:column;
+        background-color:white;
+        border-radius:20px;
+        padding:5px;
+        word-wrap:break-word;
+        width:450px;
+        height:280px;
+        position:absolute;
+        top: 50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.16);;
+        }
+        #myPara{text-align:center;}
+        #myPara2{font-size:92%;text-align: center;}
+        #mailAnchor{text-decoration:none;}
+    </style>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+</head>
+<body>
+    <div id="info">
+        <h3>This website has been blocked</h3>
+        <p id="myPara">You were prevented from visiting this website by NoMoreDomains.</p>
+        <button id="NMD_pause">Pause NoMoreDomains</button>
+    </div>
+    <script src="inject_block.js">
+    </script>
+</body>
+</html>
