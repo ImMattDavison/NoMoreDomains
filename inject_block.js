@@ -13,7 +13,7 @@ if(checkToPauseButton!=undefined){
             chrome.runtime.sendMessage({ NMD_status: "on" });
           }, PAUSE_TIME);
         localStorage.removeItem("pausingNMD");
-        window.history.go(-1);
+        window.history.go(0);
         console.log(history.length);
 
         
