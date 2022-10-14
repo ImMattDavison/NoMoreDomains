@@ -1,7 +1,7 @@
 // Keep service worker alive
 let lifeline;
 const KEEP_ALIVE = "keepAlive";
-var DOMAIN_RULES_URL = "https://raw.githubusercontent.com/Rutuj-Runwal/NoMoreDomains/master/domains.json";
+var DOMAIN_RULES_URL = "https://raw.githubusercontent.com/immattdavison/NoMoreDomains/master/domains.json";
 
 keepAlive();
 
