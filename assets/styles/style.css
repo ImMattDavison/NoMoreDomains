@@ -41,6 +41,7 @@ body {
 
 .power-switch {
   margin: auto;
+  padding-block: .4em;
 }
 
 .switch {
@@ -65,7 +66,7 @@ body {
   right: 0;
   bottom: 0;
   min-width: 80px;
-  background-color: #0054ae;
+  background-color: rgb(30, 28, 28);
   -webkit-transition: .4s;
   transition: .4s;
   padding-top: 0.15em;
@@ -84,13 +85,13 @@ body {
   left: calc(var(--switch-padding) / 2);
   bottom: calc(var(--switch-padding) / 2);
   -webkit-transition: .4s;
-  background-color: #a4c8ee;
+  background-color: rgb(200, 200, 200);
   transition: .4s;
   z-index: 0;
 }
 
 input:checked+.slider {
-  background-color: #0054ae  ;
+  background-color: rgb(30, 28, 28);
 }
 
 
