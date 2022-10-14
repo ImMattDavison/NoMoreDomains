@@ -6,9 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blocked by No More Domains</title>
     <style>
-        h3{color:red;}
+        h3{
+            background: -webkit-linear-gradient(45deg, rgb(255, 96, 0), rgb(0, 123, 255) 75%);
+            background-clip: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: 2.5em;
+            text-align: center;
+            margin-block: 0 .5em;
+        }
         body{
-        background-color: lightblue !important;
+        background-color: rgb(33, 33, 33) !important;
         display:flex;
         align-items:center;
         justify-content:center;
@@ -20,17 +29,18 @@
         align-items:center;
         justify-content:center;
         flex-direction:column;
-        background-color:white;
+        background-color:rgba(235, 235, 235, .1);
+        backdrop-filter: blur(10px);
         border-radius:20px;
-        padding:5px;
+        padding:2em;
         word-wrap:break-word;
-        width:450px;
-        height:280px;
+        /* width:450px;
+        height:280px; */
         position:absolute;
         top: 50%;
         left:50%;
         transform:translate(-50%,-50%);
-        box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.16);;
+        box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.25);;
         }
         #myPara{text-align:center;}
         #myPara2{font-size:92%;text-align: center;}
@@ -49,8 +59,8 @@
 <body>
     <div id="info">
         <h3>This website has been blocked</h3>
-        <p id="myPara">You were prevented from visiting this website by NoMoreDomains.</p>
-        <button id="NMD_pause">Pause NoMoreDomains</button>
+        <p style="margin-block: 0 1.5em; color: #fff;" id="myPara">You were prevented from visiting this website by NoMoreDomains.</p>
+        <button style="border-radius: .5em; background-color: #007bff; color: #fff; border: none; padding: .5em 1em; font-size: 1.1em; cursor: pointer;" id="NMD_pause">Disable NoMoreDomains</button>
     </div>
     <script src="inject_block.js">
     </script>
