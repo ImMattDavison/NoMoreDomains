@@ -108,9 +108,9 @@ body {
 
 .whitelist-form button:hover,
 .whitelist-form button:focus-visible {
+    transition: all 0.15s ease;
     background-color: #007bff;
     color: #fff;
-    transition: all 0.15s ease;
 }
 
 .divider {
