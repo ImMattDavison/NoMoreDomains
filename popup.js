@@ -1,6 +1,6 @@
 // Script to enable functionality for toggle(turning extension on/off)
 var Button_Toggle = document.getElementById("toggleButton");
-var Options_Button = document.getElementById("Openoptions");
+var Options_Button = document.querySelector(".settings-icon");
 
 // Update toggle button: on/off in the UI using chrome storage value
 chrome.storage.local.get(['toggle_value'], (data) => {
