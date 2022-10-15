@@ -96,6 +96,7 @@ body {
 }
 
 .whitelist-form button {
+    transition: all .15s ease;
     padding: 0.5em 1em;
     font-size: 1.2rem;
     border-radius: 4px;
