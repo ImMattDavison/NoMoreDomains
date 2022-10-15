@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html,
 body {
   width: 300px;
@@ -16,21 +22,36 @@ body {
 .title-block {
   background-color: rgb(33, 33, 33);
   color: white;
-  padding-block: 1em;
+  padding: 1em 1em 2em 1em;
   border-bottom-width: 3px;
   border-bottom-style: solid;
   border-image: linear-gradient(45deg, rgb(255, 96, 0), rgb(0, 123, 255) 75%) 1;
 
 }
 
-#Openoptions {
-  float: right;
-  width: 15px !important;
-  height: 15px !important;
-  cursor: pointer;
-  padding-right: 7px !important;
-  margin-top: 5px !important;
-  margin-right: 5px !important;
+.settings-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.settings-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-icon{
+ height: 24px;
+ cursor: pointer;
+}
+
+#title{
+  font-family: 'Roboto', sans-serif;
+
+
+}
+#subtitle{
+
 }
 
 /* Switch/Toggle button css 👇*/
