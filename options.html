@@ -8,27 +8,28 @@
 
 <body>
     <div class="container">
-        <h1 class="title">Options</h1>
+        <h1 class="title">NoMoreDomains</h1>
         <div class="options-grid">
             <div class="whitelist-container">
                 <div>
                     <h2>Whitelist Domains</h2>
-                    <p>Whitelisted domains are not redirected by NoMoreDomains</p>
+                    <p>Whitelisted domains are not redirected by NoMoreDomains. Don’t worry, you can remove them later.</p>
                 </div>
                 <div id="optionsPageDiv">
                     <div class="whitelist-form">
                         <input type="text" id="whiteListDomain" placeholder="Add domain to whitelist">
                         <button id="WhiteList_Submit_Button">Whitelist</button>
                     </div>
+                    <div class="divider"></div>
                     <table id="whiteList_domains_table">
                         <tr>
-                            <th>Whitelisted Domains</th>
+                            <th class="whitelisted-title">Whitelisted Domains</th>
                         </tr>
                         <!-- Display all whitelisted domains here -->
                         <tbody id="whiteList_domains">
                         </tbody>
                     </table>
-                    <button id="WhiteList_Erase_Button">Remove</button>
+                    <button id="WhiteList_Erase_Button">Remove all domains</button>
                 </div>
             </div>
         </div>
