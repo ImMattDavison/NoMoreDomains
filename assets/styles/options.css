@@ -155,3 +155,110 @@ body {
     font-weight: 400;
     padding: 6px 0;
 }
+
+
+
+/* BLACKLIST */
+.blacklist-container {
+    background-color: #131313;
+    padding: 48px 64px;
+    border-radius: 8px;
+    margin-block: 1em;
+    color: #fff;
+}
+
+.blacklist-container h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+.blacklist-container p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 2em;
+    color: #d9d9d9;
+    line-height: 1.5;
+}
+.blacklist-container .blacklist-form {
+    display: flex;
+    gap: 24px;
+}
+.blacklist-form input {
+    border: 2px solid #565656;
+    padding: 0.75em;
+    width: 60%;
+    font-family: "Inter", sans-serif;
+    font-size: 1.2rem;
+    background-color: #1e1e1e;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.blacklist-form input:focus,
+.blacklist-form input:active,
+.blacklist-form input:focus-visible {
+    transition: all 0.2s ease;
+    border-color: #3671b1;
+    outline: none;
+}
+
+.blacklist-form button {
+    transition: all .15s ease;
+    padding: 0.5em 1em;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    background-color: #fff;
+    border: none;
+    color: #000;
+    cursor: pointer;
+}
+
+.blacklist-form button:hover,
+.blacklist-form button:focus-visible {
+    transition: all 0.15s ease;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: #1e1e1e;
+    border-radius: 20px;
+    margin: 42px 0;
+}
+
+.blacklisted-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+#BlackList_Erase_Button {
+    padding: 0.5em 1em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #1e1e1e;
+    color: #da3633;
+    border: 1px solid #f0f6fc1a;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+#BlackList_Erase_Button:hover {
+    background-color: #da3633;
+    border-color: #ff7b72;
+    color: #fff;
+}
+
+#blackList_domains_table {
+    margin-block: 1.5em;
+}
+
+#blackList_domains td {
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 6px 0;
+}

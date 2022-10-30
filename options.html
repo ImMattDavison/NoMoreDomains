@@ -32,6 +32,28 @@
                     <button id="WhiteList_Erase_Button">Remove all domains</button>
                 </div>
             </div>
+            <div class="blacklist-container">
+                <div>
+                    <h2>Blacklist Domains</h2>
+                    <p>Blacklisted domains are redirected by NoMoreDomains. Don’t worry, you can remove them later.</p>
+                </div>
+                <div id="optionsPageDiv">
+                    <div class="blacklist-form">
+                        <input type="text" id="blackListDomain" placeholder="Add domain to blacklist">
+                        <button id="BlackList_Submit_Button">Blacklist</button>
+                    </div>
+                    <div class="divider"></div>
+                    <table id="blackList_domains_table">
+                        <tr>
+                            <th class="blacklisted-title">Blacklisted Domains</th>
+                        </tr>
+                        <!-- Display all whitelisted domains here -->
+                        <tbody id="blackList_domains">
+                        </tbody>
+                    </table>
+                    <button id="BlackList_Erase_Button">Remove all domains</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="./options.js"></script>
