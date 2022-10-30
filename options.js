@@ -20,7 +20,7 @@ function addWhiteList() {
                     chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
                 }
                 else{
-                    whiteList_Memory = [...whiteList_Memory];
+                    whiteList_Memory = new Set([...whiteList_Memory]);
                     console.log("Values doesn't exists");
                     console.log(whiteList_Memory);
                     chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
@@ -112,7 +112,7 @@ function removeWhitelist(){
                 console.log(whiteList_Memory);
                 // Reset whilelist array
                 setTimeout(() => {
-                    whiteList_Memory.length = 0;
+                    whiteList_Memory.clear();
                     chrome.storage.local.remove(["user_whitelist"]);
                     alert("Whitelist Removed!");
                 }, 500);
