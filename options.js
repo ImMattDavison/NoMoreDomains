@@ -3,31 +3,31 @@ var Domain = document.getElementById("whiteListDomain");
 var Display_whiteList_Domains = document.getElementById("whiteList_domains");
 var Erase_Button = document.getElementById("WhiteList_Erase_Button");
 var whiteList_domains_table = document.getElementById("whiteList_domains_table");
-var whiteList_Memory = [];
+var whiteList_Memory = new Set();
 
 function addWhiteList() {
     // Store the user input into an array and update declarativeNetRequest Filters
     if(Domain.value!=undefined && Domain.value!=""){
-        whiteList_Memory.push(Domain.value);
+        whiteList_Memory.add(Domain.value);
 
         // Update whiteList_Memory variable with domains already exisitng in the local storage
         chrome.storage.local.get(['user_whitelist'], function (data) {
             if(data.user_whitelist!=undefined){
                 if(data.user_whitelist.length!=0){
-                    whiteList_Memory = [...whiteList_Memory, ...data.user_whitelist];
+                    whiteList_Memory = new Set([...whiteList_Memory, ...data.user_whitelist]);
                     console.log("Values already exists");
                     console.log(whiteList_Memory);
-                    chrome.storage.local.set({ "user_whitelist": whiteList_Memory });
+                    chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
                 }
                 else{
-                    whiteList_Memory = [...whiteList_Memory];
-                    console.log("Values dosen't exists");
+                    whiteList_Memory = new Set([...whiteList_Memory]);
+                    console.log("Values doesn't exists");
                     console.log(whiteList_Memory);
-                    chrome.storage.local.set({ "user_whitelist": whiteList_Memory });
+                    chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
                 }
             }
         });
-        chrome.storage.local.set({ "user_whitelist": whiteList_Memory });
+        chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
         // Add decleartiveNetRequest rules beyond the rules already present by default in the extension 
         chrome.storage.local.get(['rules_count','user_whitelist'], function (result) {
             if(result.user_whitelist!=undefined){
@@ -112,7 +112,7 @@ function removeWhitelist(){
                 console.log(whiteList_Memory);
                 // Reset whilelist array
                 setTimeout(() => {
-                    whiteList_Memory.length = 0;
+                    whiteList_Memory.clear();
                     chrome.storage.local.remove(["user_whitelist"]);
                     alert("Whitelist Removed!");
                 }, 500);
