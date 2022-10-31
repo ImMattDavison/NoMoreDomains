@@ -129,6 +129,7 @@ body {
 }
 
 #WhiteList_Erase_Button {
+    display: none;
     padding: 0.5em 1em;
     font-size: 1.2rem;
     font-weight: 600;
@@ -147,6 +148,7 @@ body {
 }
 
 #whiteList_domains_table {
+    display: none;
     margin-block: 1.5em;
 }
 
