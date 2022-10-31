@@ -1,10 +1,10 @@
 # Issue
 
 ### Issue Type
-[] Bug
-[] Enhancement
-[] Feature Request
-[] Question
+- [] Bug
+- [] Enhancement
+- [] Feature Request
+- [] Question
 
 ### Description
 
@@ -24,4 +24,4 @@
 
 ### Checklist
 
-[] I have read the [Contributing Guidelines](https://github.com/immattdavison/NoMoreDomains/blob/master/domains.json)
+- [] I have read the [Contributing Guidelines](https://github.com/immattdavison/NoMoreDomains/blob/master/domains.json)
