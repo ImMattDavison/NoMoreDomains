@@ -120,6 +120,7 @@ body {
     background-color: #1e1e1e;
     border-radius: 20px;
     margin: 42px 0;
+    display: none;
 }
 
 .whitelisted-title {
