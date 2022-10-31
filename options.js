@@ -3,6 +3,7 @@ var Domain = document.getElementById("whiteListDomain");
 var Display_whiteList_Domains = document.getElementById("whiteList_domains");
 var Erase_Button = document.getElementById("WhiteList_Erase_Button");
 var whiteList_domains_table = document.getElementById("whiteList_domains_table");
+var divider = document.querySelector(".divider");
 var whiteList_Memory = new Set();
 
 function addWhiteList() {
@@ -86,6 +87,7 @@ function addWhiteList() {
         });
         
         whiteList_domains_table.style.display = "block";
+        divider.style.display = "block";
         Erase_Button.style.display = "block";
     }
     else{
