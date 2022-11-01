@@ -63,7 +63,9 @@ function addWhiteList() {
                     chrome.declarativeNetRequest.updateDynamicRules({
                         addRules: protectionRulesArr,
                         removeRuleIds: ruleIDsCount,
-                    });
+                        },
+                        () => chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after adding: ", rules))
+                    );
                 }
                 // save whiteList_RuleIds to storage.local
                 // assuming all whitelist entries is re-generated when
@@ -79,11 +81,14 @@ function addWhiteList() {
     else{
         alert("Enter a valid domain value to add to whitelist!");
     }
+
 }
 
 function removeWhitelist(){
     // Disable the whitelisting for the domains
     chrome.storage.local.get(['rules_count','user_whitelist'], function (result) {
+        console.log("removeWhiteList: ")
+        console.log(result.user_whitelist)
         if(result.user_whitelist.length!=0){
             chrome.declarativeNetRequest.updateDynamicRules({
                 removeRuleIds: Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1),
@@ -105,6 +110,7 @@ function removeWhitelist(){
                     alert("Whitelist Removed!");
                 }, 500);
                 console.log(whiteList_Memory);
+                chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
             });
         }
         else{
@@ -123,6 +129,7 @@ function restore_options() {
             whiteList_domains_table.style.display = "none";
             Erase_Button.style.display = "none";
         }
+        chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("restored: ", rules));
     });
 }
 
@@ -228,9 +235,18 @@ async function handleWhiteListEntDeletion(e) {
         whiteList_domains_table.style.display = "none";
         Erase_Button.style.display = "none";
     }
+    chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
 
 WhiteList_Button.addEventListener("click", addWhiteList);
 Erase_Button.addEventListener("click", removeWhitelist);
+
+
+function showModifiedRules(msg, rules) {
+    console.log(msg);
+    let modRules = rules.filter((rule)=> rule.priority==2);
+    console.log("white listed: ", modRules.filter((rule)=> rule.action.type=="allow").map(rule=>rule.condition.urlFilter));
+    console.log("blocked: ", modRules.filter((rule)=> rule.action.type=="redirect").map(rule=>rule.condition.urlFilter));
+}
