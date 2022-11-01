@@ -61,7 +61,9 @@ function addWhiteList() {
                     chrome.declarativeNetRequest.updateDynamicRules({
                         addRules: protectionRulesArr,
                         removeRuleIds: ruleIDsCount,
-                    });
+                        },
+                        () => chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after adding: ", rules))
+                    );
                 }
             } 
         });
@@ -93,11 +95,14 @@ function addWhiteList() {
     else{
         alert("Enter a valid domain value to add to whitelist!");
     }
+
 }
 
 function removeWhitelist(){
     // Disable the whitelisting for the domains
     chrome.storage.local.get(['rules_count','user_whitelist'], function (result) {
+        console.log("removeWhiteList: ")
+        console.log(result.user_whitelist)
         if(result.user_whitelist.length!=0){
             chrome.declarativeNetRequest.updateDynamicRules({
                 removeRuleIds: Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1),
@@ -119,6 +124,7 @@ function removeWhitelist(){
                     alert("Whitelist Removed!");
                 }, 500);
                 console.log(whiteList_Memory);
+                chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
             });
         }
         else{
@@ -132,8 +138,14 @@ function removeWhitelist(){
 function restore_options() {
     chrome.storage.local.get(['user_whitelist'], function (data) {
         if(data.user_whitelist!=undefined){
-            whiteList_domains_table.style.display = "block";
-            Erase_Button.style.display = "block";
+            displayWhiteListTable();
+        } else {
+            whiteList_domains_table.style.display = "none";
+            Erase_Button.style.display = "none";
+        }
+        chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("restored: ", rules));
+    });
+}
 
             var tds = "";
             data.user_whitelist.forEach(website => {
@@ -146,8 +158,37 @@ function restore_options() {
             Erase_Button.style.display = "none";
         }
     });
+
+    // update whiteList_Memory and storage.local
+    whiteList_Memory.delete(domain);
+    whiteList_RuleIds.delete(domain);
+    
+    // wait until saved before reading/displaying whitelist to the user
+    if (whiteList_Memory.size) {
+        await chrome.storage.local.set({
+            "user_whitelist": [...whiteList_Memory],
+            "whiteList_RuleIds": [...whiteList_RuleIds]
+        });
+        // display remaining WhiteList entries
+        displayWhiteListTable();
+    
+    } else { 
+        // no whitelist entry to save
+        await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
+        whiteList_domains_table.style.display = "none";
+        Erase_Button.style.display = "none";
+    }
+    chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 
 WhiteList_Button.addEventListener("click", addWhiteList);
 Erase_Button.addEventListener("click", removeWhitelist);
+
+
+function showModifiedRules(msg, rules) {
+    console.log(msg);
+    let modRules = rules.filter((rule)=> rule.priority==2);
+    console.log("white listed: ", modRules.filter((rule)=> rule.action.type=="allow").map(rule=>rule.condition.urlFilter));
+    console.log("blocked: ", modRules.filter((rule)=> rule.action.type=="redirect").map(rule=>rule.condition.urlFilter));
+}
