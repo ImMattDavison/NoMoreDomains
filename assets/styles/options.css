@@ -120,6 +120,7 @@ body {
     background-color: #1e1e1e;
     border-radius: 20px;
     margin: 42px 0;
+    display: none;
 }
 
 .whitelisted-title {
@@ -128,32 +129,7 @@ body {
     margin-bottom: 0.5em;
 }
 
-.whitelist-ent-del-btn {
-    padding: 5px 9px;
-    font-weight: 600;
-    cursor: pointer;
-    background-color: #1e1e1e;
-    color: #da3633;
-    border: 1px solid #f0f6fc1a;
-    border-radius: 4px;
-    transition: all 0.15s ease;
-}
-
-.whitelist-ent-del-btn:hover {
-    background-color: #da3633;
-    border-color: #ff7b72;
-    color: #fff;
-}
-
-.whitelist-ent-del-btn>img {
-    position: relative;
-    top: -0.05em;
-    height: 7px;
-    width: 7px;
-}
-
 #WhiteList_Erase_Button {
-    display: none;
     padding: 0.5em 1em;
     font-size: 1.2rem;
     font-weight: 600;
@@ -172,7 +148,6 @@ body {
 }
 
 #whiteList_domains_table {
-    display: none;
     margin-block: 1.5em;
 }
 

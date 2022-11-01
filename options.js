@@ -3,8 +3,8 @@ var Domain = document.getElementById("whiteListDomain");
 var Display_whiteList_Domains = document.getElementById("whiteList_domains");
 var Erase_Button = document.getElementById("WhiteList_Erase_Button");
 var whiteList_domains_table = document.getElementById("whiteList_domains_table");
+var divider = document.querySelector(".divider");
 var whiteList_Memory = new Set();
-var whiteList_RuleIds = new Map();
 
 function addWhiteList() {
     // Store the user input into an array and update declarativeNetRequest Filters
@@ -47,8 +47,6 @@ function addWhiteList() {
                                 "resourceTypes": ["main_frame","sub_frame",]
                             }
                         });
-                        // save domain's rule id
-                        whiteList_RuleIds.set(domain, id);
                     });
                     if (id > 0) {
                         var ruleIDsCount = [];
@@ -67,16 +65,32 @@ function addWhiteList() {
                         () => chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after adding: ", rules))
                     );
                 }
-                // save whiteList_RuleIds to storage.local
-                // assuming all whitelist entries is re-generated when
-                // entry is added, we don't need to access whiteList_RuleIds
-                // while updating it on storage.local
-                chrome.storage.local.set({"whiteList_RuleIds": [...whiteList_RuleIds.entries()]})
             } 
         });
 
-        // Display all whitelisted domains
-        displayWhiteListTable()
+        // Display all whitelisted domains in tabular format on frontend
+        chrome.storage.local.get(['user_whitelist'], function (data) {
+            if (data.user_whitelist != undefined && data.user_whitelist!=null) {
+                if (data.user_whitelist.length != 0) {
+                    var tds = "";
+                    data.user_whitelist.forEach(website => {
+                        tds += "<tr><td>" + website + "</td></tr>";
+                    });
+                    Display_whiteList_Domains.innerHTML = tds;
+                }
+            }
+            else{
+                var tds = "";
+                whiteList_Memory.forEach(website => {
+                    tds += "<tr><td>" + website + "</td></tr>";
+                }); 
+                Display_whiteList_Domains.innerHTML = tds;
+            }
+        });
+        
+        whiteList_domains_table.style.display = "block";
+        divider.style.display = "block";
+        Erase_Button.style.display = "block";
     }
     else{
         alert("Enter a valid domain value to add to whitelist!");
@@ -106,7 +120,7 @@ function removeWhitelist(){
                 // Reset whilelist array
                 setTimeout(() => {
                     whiteList_Memory.clear();
-                    chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
+                    chrome.storage.local.remove(["user_whitelist"]);
                     alert("Whitelist Removed!");
                 }, 500);
                 console.log(whiteList_Memory);
@@ -133,87 +147,16 @@ function restore_options() {
     });
 }
 
-function genWhiteListTabEnt(website) {
-    return (
-        "<tr class='whitelist-ent'> \
-            <td>" + website + "</td> \
-            <td> \
-                <button class='whitelist-ent-del-btn' data-wl-ent='" + website + "'> \
-                <img src='assets/cross.svg'> \
-                </button> \
-            </td> \
-        </tr>"
-    );
-}
-
-function displayWhiteListTable() {
-    chrome.storage.local.get(['user_whitelist'], function (data) {
-        if (data.user_whitelist != undefined && data.user_whitelist!=null) {
-            if (data.user_whitelist.length != 0) {
-                var tds = "";
-                data.user_whitelist.forEach(website => {
-                tds += genWhiteListTabEnt(website);
-                
-                });
-                Display_whiteList_Domains.innerHTML = tds;
-
-                // add event listeners to facilitate deletion
-                let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-                delBtns.forEach((node) => 
-                    node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-                );
-            }
-        } else {
             var tds = "";
-            whiteList_Memory.forEach(website => {
-                // tds += "<tr><td>" + website + "</td></tr>";
-                tds += genWhiteListTabEnt(website);
-            }); 
+            data.user_whitelist.forEach(website => {
+                tds += "<tr><td>" + website + "</td></tr>";
+            });
             Display_whiteList_Domains.innerHTML = tds;
-
-
-            // add event listeners to facilitate deletion
-            let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-            delBtns.forEach((node) => 
-                node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-            );
         }
-
-        whiteList_domains_table.style.display = "block";
-        Erase_Button.style.display = "block";
-    });
-}
-
-async function handleWhiteListEntDeletion(e) {
-    const domain = e.currentTarget.dataset.wlEnt; 
-
-    // retrieve whiteList rule-ids from the storage and merge with existing ones
-    let result = await chrome.storage.local.get(["whiteList_RuleIds", "user_whitelist"]);
-    if(result.whiteList_RuleIds) {
-        whiteList_RuleIds = new Map([...whiteList_RuleIds, ...result.whiteList_RuleIds]);
-    }
-    if(result.user_whitelist) { 
-        whiteList_Memory = new Set([...whiteList_Memory, ...result.user_whitelist]); 
-    }
-
-    const ruleId = domain && whiteList_RuleIds.get(domain);
-    if(ruleId==undefined) {
-        console.error("no rule id found for: ", domain);
-        return;
-    }
-
-    // console.log("to be deleted, domain: ", domain, " rule id:", ruleId); 
-    await chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [ruleId],
-        addRules: [{
-            id: ruleId,
-            priority: 2,
-            action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
-            condition: {
-                urlFilter: "||" + domain + "^",
-                resourceTypes: ["main_frame", "sub_frame"],
-            },
-        }]
+        else{
+            whiteList_domains_table.style.display = "none";
+            Erase_Button.style.display = "none";
+        }
     });
 
     // update whiteList_Memory and storage.local
@@ -237,7 +180,6 @@ async function handleWhiteListEntDeletion(e) {
     }
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
 }
-
 document.addEventListener('DOMContentLoaded', restore_options);
 
 WhiteList_Button.addEventListener("click", addWhiteList);
