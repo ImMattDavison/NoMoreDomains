@@ -94,39 +94,44 @@ function addWhiteList() {
 
 }
 
-function removeWhitelist(){
+async function removeWhiteList(){
     // Disable the whitelisting for the domains
-    chrome.storage.local.get(['rules_count','user_whitelist'], function (result) {
-        console.log("removeWhiteList: ")
-        console.log(result.user_whitelist)
-        if(result.user_whitelist.length!=0){
-            chrome.declarativeNetRequest.updateDynamicRules({
-                removeRuleIds: Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1),
-                addRules: result.user_whitelist.map((domain, index) => ({
-                    id: index + result.rules_count + 1,
-                    priority: 2,
-                    action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
-                    condition: {
-                        urlFilter: "||" + domain + "^",
-                        resourceTypes: ["main_frame", "sub_frame"],
-                    },
-                })),
-            },()=>{
-                console.log(whiteList_Memory);
-                // Reset whilelist array
-                setTimeout(() => {
-                    whiteList_Memory.clear();
-                    chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
-                    alert("Whitelist Removed!");
-                }, 500);
-                console.log(whiteList_Memory);
-                chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
-            });
+    const result = await chrome.storage.local.get(['rules_count','user_whitelist']);
+    console.log("removeWhiteList: ");
+    console.log(result.user_whitelist);
+    
+    // whitelist is empty
+    if(result.user_whitelist.length==0) {
+        alert("Add domains to whitelist before removing!");
+        return;
+    }
+
+    // update rules
+    let removeRuleIds = Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1);
+    let updatedRules = result.user_whitelist.map((domain, index) => ({
+        id: index + result.rules_count + 1,
+        priority: 2,
+        action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
+        condition: {
+            urlFilter: "||" + domain + "^",
+            resourceTypes: ["main_frame", "sub_frame"],
         }
-        else{
-            alert("Add domains to whitelist before removing!");
-        }
+    }));
+    await chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: removeRuleIds,
+        addRules: updatedRules,
     });
+    console.log(whiteList_Memory);
+
+    // Reset whilelist
+    await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
+    whiteList_Memory.clear();
+    setTimeout(() => alert("Whitelist Removed!"), 500);
+
+    console.log(whiteList_Memory);
+    chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
+   
+    // hide table from the page
     whiteList_domains_table.style.display = "none";
     Erase_Button.style.display = "none";
 }
