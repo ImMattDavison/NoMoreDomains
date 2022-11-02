@@ -131,16 +131,9 @@ function removeWhitelist(){
     Erase_Button.style.display = "none";
 }
 
-function restore_options() {
-    chrome.storage.local.get(['user_whitelist'], function (data) {
-        if(data.user_whitelist!=undefined){
-            displayWhiteListTable();
-        } else {
-            whiteList_domains_table.style.display = "none";
-            Erase_Button.style.display = "none";
-        }
-        chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("restored: ", rules));
-    });
+async function restore_options() {
+    displayWhiteListTable();
+    chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("restored: ", rules));
 }
 
 function genWhiteListTabEnt(website) {
@@ -156,42 +149,46 @@ function genWhiteListTabEnt(website) {
     );
 }
 
-function displayWhiteListTable() {
-    chrome.storage.local.get(['user_whitelist'], function (data) {
-        if (data.user_whitelist != undefined && data.user_whitelist!=null) {
-            if (data.user_whitelist.length != 0) {
-                var tds = "";
-                data.user_whitelist.forEach(website => {
-                tds += genWhiteListTabEnt(website);
-                
-                });
-                Display_whiteList_Domains.innerHTML = tds;
+async function displayWhiteListTable() {
+    const data = await chrome.storage.local.get(["user_whitelist"]);
+    if (data.user_whitelist && data.user_whitelist.length!=0) {
+        var tds = "";
+        data.user_whitelist.forEach(website => {
+            tds += genWhiteListTabEnt(website);
+        });
+        Display_whiteList_Domains.innerHTML = tds;
 
-                // add event listeners to facilitate deletion
-                let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-                delBtns.forEach((node) => 
-                    node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-                );
-            }
-        } else {
-            var tds = "";
-            whiteList_Memory.forEach(website => {
-                // tds += "<tr><td>" + website + "</td></tr>";
-                tds += genWhiteListTabEnt(website);
-            }); 
-            Display_whiteList_Domains.innerHTML = tds;
-
-
-            // add event listeners to facilitate deletion
-            let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-            delBtns.forEach((node) => 
-                node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-            );
-        }
+        // add event listeners to facilitate deletion
+        let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
+        delBtns.forEach((node) => 
+            node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
+        );
 
         whiteList_domains_table.style.display = "block";
         Erase_Button.style.display = "block";
-    });
+
+    } else if(whiteList_Memory && whiteList_Memory.size!=0) {
+        var tds = "";
+        whiteList_Memory.forEach(website => {
+            // tds += "<tr><td>" + website + "</td></tr>";
+            tds += genWhiteListTabEnt(website);
+        }); 
+        Display_whiteList_Domains.innerHTML = tds;
+
+
+        // add event listeners to facilitate deletion
+        let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
+        delBtns.forEach((node) => 
+            node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
+        );
+     
+        whiteList_domains_table.style.display = "block";
+        Erase_Button.style.display = "block";
+
+    } else {
+        whiteList_domains_table.style.display = "none";
+        Erase_Button.style.display = "none";
+    }
 }
 
 async function handleWhiteListEntDeletion(e) {
