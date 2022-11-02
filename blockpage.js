@@ -67,6 +67,7 @@ function fetchProtectionRules(url,status){
     }
     else if(status==="off"){
       console.log("Allowing domains!");
+      // TODO: remove user whitelisting also
       chrome.declarativeNetRequest.updateDynamicRules({
         removeRuleIds: domains.map((_, index) => index + 1),
         addRules: domains.map((domain, index) => ({
@@ -137,3 +138,14 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
+
+// quick delete all rules added by the extensions and regenerate default rules.
+async function revertRulesDefault() {
+  // remove all rules
+  let ruleIds = (await chrome.declarativeNetRequest.getDynamicRules())
+    .map((rule)=>rule.id);
+  await chrome.declarativeNetRequest.updateDynamicRules({removeRuleIds: ruleIds});
+
+  // regenerated default rules
+  performUpdate("redirect");
+}
