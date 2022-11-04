@@ -8,8 +8,6 @@ var whiteList_Memory = new Set();
 var whiteList_RuleIds = new Map();
 
 async function addWhiteList() {
-
-    // Store the user input into an array and update declarativeNetRequest Filters
     if(Domain.value==undefined || Domain.value=="") {
         alert("Enter a valid domain value to add to whitelist!");
         return;
@@ -25,6 +23,12 @@ async function addWhiteList() {
         console.log("Values doesn't exists");
     }
 
+    // no action needed if domain exists in whiteList_Memory
+    if(whiteList_Memory.has(Domain.value)) {
+        alert("domain exists in whitelist!!");
+        return;
+    }
+
     // alert user if there's no space for new rule and exit
     if(
         whiteList_Memory.size + result.rules_count 
@@ -35,11 +39,6 @@ async function addWhiteList() {
         return;
     }
 
-    // no action needed if domain exists in whiteList_Memory
-    if(whiteList_Memory.has(Domain.value)) {
-        alert("domain exists in whitelist!!");
-        return;
-    }
 
     // add domain entered by the user into the whitelist
     whiteList_Memory.add(Domain.value);
