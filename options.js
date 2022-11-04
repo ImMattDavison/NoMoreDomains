@@ -56,15 +56,7 @@ async function addWhiteList() {
         // save domain's rule id
         whiteList_RuleIds.set(domain, id);
         // add rule
-        protectionRulesArr.push({
-            "id": id,
-            "priority": 2,
-            "action": {"type": "allow"},
-            "condition": {
-                "urlFilter": "||" + domain + "^",
-                "resourceTypes": ["main_frame","sub_frame",]
-            }
-        });
+        protectionRulesArr.push(createRule(id, "allow", domain));
     });
 
     // save whiteList_RuleIds to storage.local.
@@ -102,15 +94,12 @@ async function removeWhiteList(){
 
     // update rules
     let removeRuleIds = Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1);
-    let updatedRules = result.user_whitelist.map((domain, index) => ({
-        id: index + result.rules_count + 1,
-        priority: 2,
-        action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
-        condition: {
-            urlFilter: "||" + domain + "^",
-            resourceTypes: ["main_frame", "sub_frame"],
-        }
-    }));
+    let updatedRules = result.user_whitelist.map((domain, index) => createRule(
+        index + result.rules_count + 1,
+        false,
+        domain
+    ));
+    
     await chrome.declarativeNetRequest.updateDynamicRules({
         removeRuleIds: removeRuleIds,
         addRules: updatedRules,
@@ -208,18 +197,10 @@ async function handleWhiteListEntDeletion(e) {
         return;
     }
 
-    // console.log("to be deleted, domain: ", domain, " rule id:", ruleId); 
+    let rule = createRule(ruleId, false, domain);
     await chrome.declarativeNetRequest.updateDynamicRules({
         removeRuleIds: [ruleId],
-        addRules: [{
-            id: ruleId,
-            priority: 2,
-            action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
-            condition: {
-                urlFilter: "||" + domain + "^",
-                resourceTypes: ["main_frame", "sub_frame"],
-            },
-        }]
+        addRules: [rule]
     });
 
     // update whiteList_Memory and storage.local
@@ -242,6 +223,27 @@ async function handleWhiteListEntDeletion(e) {
         Erase_Button.style.display = "none";
     }
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
+}
+
+/**
+ * 
+ * @param id rule's id
+ * @param allow if set to true, creates 'allow' rule else 'block' rule
+ * @param domain url for the domain 
+ * @returns output rule based on the args
+ */
+function createRule(id, allow, domain) {
+    return ({
+        id: id,
+        priority: 2,
+        action: allow 
+            ? { type: "allow" } 
+            : { type: "redirect", redirect: { extensionPath: "/block.html" }},
+        condition: {
+            urlFilter: "||" + domain + "^",
+            resourceTypes: ["main_frame","sub_frame"]
+        }
+    })
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
