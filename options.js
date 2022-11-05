@@ -7,140 +7,120 @@ var divider = document.querySelector(".divider");
 var whiteList_Memory = new Set();
 var whiteList_RuleIds = new Map();
 
-// FIXME: addWhiteList starts replacing existing rules 
-// after '/options' is reloaded instead of making new ones.
-// or might not work as expected incase, load '/options' -> add whitelist domain -> reload.
-function addWhiteList() {
-    // Store the user input into an array and update declarativeNetRequest Filters
-    if(Domain.value!=undefined && Domain.value!=""){
-        // no action needed if domain exists in whiteList
-        if (whiteList_Memory.has(Domain.value)) {
-            alert("domain already exists in whitelist!!");
-            return;
-        }
-
-        whiteList_Memory.add(Domain.value);
-
-        // Update whiteList_Memory variable with domains already exisitng in the local storage
-        chrome.storage.local.get(['user_whitelist'], function (data) {
-            if(data.user_whitelist!=undefined){
-                if(data.user_whitelist.length!=0){
-                    whiteList_Memory = new Set([...whiteList_Memory, ...data.user_whitelist]);
-                    console.log("Values already exists");
-                    console.log(whiteList_Memory);
-                    chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
-                }
-                else{
-                    whiteList_Memory = new Set([...whiteList_Memory]);
-                    console.log("Values doesn't exists");
-                    console.log(whiteList_Memory);
-                    chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
-                }
-            }
-        });
-        chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
-        // Add decleartiveNetRequest rules beyond the rules already present by default in the extension 
-        chrome.storage.local.get(['rules_count','user_whitelist'], function (result) {
-            if(result.user_whitelist!=undefined){
-                var id = result.rules_count;
-                var protectionRulesArr = [];
-                if (result.user_whitelist.length > 0) {
-                    console.log("User:",result.user_whitelist);
-                    result.user_whitelist.forEach((domain) => {
-                        id = id + 1;
-                        protectionRulesArr.push({
-                            "id": id,
-                            "priority": 2,
-                            "action": {"type": "allow"},
-                            "condition": {
-                                "urlFilter": "||" + domain + "^",
-                                "resourceTypes": ["main_frame","sub_frame",]
-                            }
-                        });
-                        // save domain's rule id
-                        whiteList_RuleIds.set(domain, id);
-                    });
-                    if (id > 0) {
-                        var ruleIDsCount = [];
-                        for (var i = result.rules_count+1; i < id + 1; i++) {
-                            ruleIDsCount.push(i);
-                        }
-                    }
-                } else { console.log("dNr Error: Ruleset Limit overflow"); }
-                console.log(protectionRulesArr);
-                console.log(ruleIDsCount);
-                if (protectionRulesArr.length > 0) {
-                    chrome.declarativeNetRequest.updateDynamicRules({
-                        addRules: protectionRulesArr,
-                        removeRuleIds: ruleIDsCount,
-                        },
-                        () => chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after adding: ", rules))
-                    );
-                }
-                // save whiteList_RuleIds to storage.local
-                // assuming all whitelist entries is re-generated when
-                // entry is added, we don't need to access whiteList_RuleIds
-                // while updating it on storage.local
-                chrome.storage.local.set({"whiteList_RuleIds": [...whiteList_RuleIds.entries()]})
-            } 
-        });
-
-        // Display all whitelisted domains
-        displayWhiteListTable()
-    }
-    else{
+async function addWhiteList() {
+    if(Domain.value==undefined || Domain.value=="") {
         alert("Enter a valid domain value to add to whitelist!");
+        return;
     }
 
+    // Update whiteList_Memory with domains already exisitng in the local storage
+    const result = await chrome.storage.local.get(['rules_count','user_whitelist']);
+    if(result.user_whitelist && result.user_whitelist.length!=0) {
+        whiteList_Memory = new Set([...whiteList_Memory, ...result.user_whitelist]);
+        console.log("Values already exists");
+
+    } else {
+        console.log("Values doesn't exists");
+    }
+
+    // no action needed if domain exists in whiteList_Memory
+    if(whiteList_Memory.has(Domain.value)) {
+        alert("domain exists in whitelist!!");
+        return;
+    }
+
+    // alert user if there's no space for new rule and exit
+    if(
+        whiteList_Memory.size + result.rules_count 
+        >= chrome.declarativeNetRequest.MAX_NUMBER_OF_DYNAMIC_RULES
+    ) { 
+        console.log("dNr Error: Ruleset Limit overflow");
+        alert("max rule capacity exceeded, delete unused rules before adding more")
+        return;
+    }
+
+
+    // add domain entered by the user into the whitelist
+    whiteList_Memory.add(Domain.value);
+    console.log("user whitelist: ", whiteList_Memory);
+
+    // save to local storage
+    await chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
+
+    // Add decleartiveNetRequest rules beyond the rules already present by default in the extension 
+    var id = result.rules_count;
+    var protectionRulesArr = [];
+    whiteList_Memory.forEach((domain) => {
+        id = id + 1;
+        // save domain's rule id
+        whiteList_RuleIds.set(domain, id);
+        // add rule
+        protectionRulesArr.push(createRule(id, true, domain));
+    });
+
+    // save whiteList_RuleIds to storage.local.
+    // Assuming all whitelist entries is re-generated when
+    // entry is added, we don't need to access whiteList_RuleIds
+    // while updating it on storage.local
+    await chrome.storage.local.set({"whiteList_RuleIds": [...whiteList_RuleIds.entries()]})
+
+    console.log("protection rule generated: ", protectionRulesArr);
+    console.log("whitelist {domain, ruleId}: ", whiteList_RuleIds);
+    await chrome.declarativeNetRequest.updateDynamicRules({
+            addRules: protectionRulesArr,
+            removeRuleIds: [...whiteList_RuleIds.values()], // extract ids for the rules
+        },
+    );
+    chrome.declarativeNetRequest.getDynamicRules((rules) => showModifiedRules(
+        "after adding: ", rules
+    ));
+
+    // Display all whitelisted domains
+    displayWhiteListTable();
 }
 
-function removeWhitelist(){
+async function removeWhiteList(){
     // Disable the whitelisting for the domains
-    chrome.storage.local.get(['rules_count','user_whitelist'], function (result) {
-        console.log("removeWhiteList: ")
-        console.log(result.user_whitelist)
-        if(result.user_whitelist.length!=0){
-            chrome.declarativeNetRequest.updateDynamicRules({
-                removeRuleIds: Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1),
-                addRules: result.user_whitelist.map((domain, index) => ({
-                    id: index + result.rules_count + 1,
-                    priority: 2,
-                    action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
-                    condition: {
-                        urlFilter: "||" + domain + "^",
-                        resourceTypes: ["main_frame", "sub_frame"],
-                    },
-                })),
-            },()=>{
-                console.log(whiteList_Memory);
-                // Reset whilelist array
-                setTimeout(() => {
-                    whiteList_Memory.clear();
-                    chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
-                    alert("Whitelist Removed!");
-                }, 500);
-                console.log(whiteList_Memory);
-                chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
-            });
-        }
-        else{
-            alert("Add domains to whitelist before removing!");
-        }
+    const result = await chrome.storage.local.get(['rules_count','user_whitelist']);
+    console.log("removeWhiteList: ");
+    console.log(result.user_whitelist);
+    
+    // whitelist is empty
+    if(result.user_whitelist.length==0) {
+        alert("Add domains to whitelist before removing!");
+        return;
+    }
+
+    // update rules
+    let removeRuleIds = Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1);
+    let updatedRules = result.user_whitelist.map((domain, index) => createRule(
+        index + result.rules_count + 1,
+        false,
+        domain
+    ));
+    
+    await chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: removeRuleIds,
+        addRules: updatedRules,
     });
+    console.log(whiteList_Memory);
+
+    // Reset whilelist
+    await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
+    whiteList_Memory.clear();
+    setTimeout(() => alert("Whitelist Removed!"), 500);
+
+    console.log(whiteList_Memory);
+    chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
+   
+    // hide table from the page
     whiteList_domains_table.style.display = "none";
     Erase_Button.style.display = "none";
 }
 
-function restore_options() {
-    chrome.storage.local.get(['user_whitelist'], function (data) {
-        if(data.user_whitelist!=undefined){
-            displayWhiteListTable();
-        } else {
-            whiteList_domains_table.style.display = "none";
-            Erase_Button.style.display = "none";
-        }
-        chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("restored: ", rules));
-    });
+async function restore_options() {
+    displayWhiteListTable();
+    chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("restored: ", rules));
 }
 
 function genWhiteListTabEnt(website) {
@@ -156,42 +136,28 @@ function genWhiteListTabEnt(website) {
     );
 }
 
-function displayWhiteListTable() {
-    chrome.storage.local.get(['user_whitelist'], function (data) {
-        if (data.user_whitelist != undefined && data.user_whitelist!=null) {
-            if (data.user_whitelist.length != 0) {
-                var tds = "";
-                data.user_whitelist.forEach(website => {
-                tds += genWhiteListTabEnt(website);
-                
-                });
-                Display_whiteList_Domains.innerHTML = tds;
+async function displayWhiteListTable() {
+    const data = await chrome.storage.local.get(["user_whitelist"]);
+    if (!data.user_whitelist || data.user_whitelist.length==0) {
+        whiteList_domains_table.style.display = "none";
+        Erase_Button.style.display = "none";
+        return;
+    }
 
-                // add event listeners to facilitate deletion
-                let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-                delBtns.forEach((node) => 
-                    node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-                );
-            }
-        } else {
-            var tds = "";
-            whiteList_Memory.forEach(website => {
-                // tds += "<tr><td>" + website + "</td></tr>";
-                tds += genWhiteListTabEnt(website);
-            }); 
-            Display_whiteList_Domains.innerHTML = tds;
-
-
-            // add event listeners to facilitate deletion
-            let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-            delBtns.forEach((node) => 
-                node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-            );
-        }
-
-        whiteList_domains_table.style.display = "block";
-        Erase_Button.style.display = "block";
+    var tds = "";
+    data.user_whitelist.forEach(website => {
+        tds += genWhiteListTabEnt(website);
     });
+    Display_whiteList_Domains.innerHTML = tds;
+
+    // add event listeners to facilitate deletion
+    let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
+    delBtns.forEach((node) => 
+        node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
+    );
+
+    whiteList_domains_table.style.display = "block";
+    Erase_Button.style.display = "block";
 }
 
 async function handleWhiteListEntDeletion(e) {
@@ -212,18 +178,10 @@ async function handleWhiteListEntDeletion(e) {
         return;
     }
 
-    // console.log("to be deleted, domain: ", domain, " rule id:", ruleId); 
+    let rule = createRule(ruleId, false, domain);
     await chrome.declarativeNetRequest.updateDynamicRules({
         removeRuleIds: [ruleId],
-        addRules: [{
-            id: ruleId,
-            priority: 2,
-            action: { type: "redirect", redirect: { extensionPath: "/block.html" } },
-            condition: {
-                urlFilter: "||" + domain + "^",
-                resourceTypes: ["main_frame", "sub_frame"],
-            },
-        }]
+        addRules: [rule]
     });
 
     // update whiteList_Memory and storage.local
@@ -248,10 +206,31 @@ async function handleWhiteListEntDeletion(e) {
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
 }
 
+/**
+ * 
+ * @param id rule's id
+ * @param allow if set to true, creates 'allow' rule else 'block' rule
+ * @param domain url for the domain 
+ * @returns output rule based on the args
+ */
+function createRule(id, allow, domain) {
+    return ({
+        id: id,
+        priority: 2,
+        action: allow 
+            ? { type: "allow" } 
+            : { type: "redirect", redirect: { extensionPath: "/block.html" }},
+        condition: {
+            urlFilter: "||" + domain + "^",
+            resourceTypes: ["main_frame","sub_frame"]
+        }
+    })
+}
+
 document.addEventListener('DOMContentLoaded', restore_options);
 
 WhiteList_Button.addEventListener("click", addWhiteList);
-Erase_Button.addEventListener("click", removeWhitelist);
+Erase_Button.addEventListener("click", removeWhiteList);
 
 
 function showModifiedRules(msg, rules) {
