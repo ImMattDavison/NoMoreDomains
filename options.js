@@ -55,7 +55,7 @@ async function addWhiteList() {
         // save domain's rule id
         whiteList_RuleIds.set(domain, id);
         // add rule
-        protectionRulesArr.push(createRule(id, "allow", domain));
+        protectionRulesArr.push(createRule(id, true, domain));
     });
 
     // save whiteList_RuleIds to storage.local.
@@ -138,44 +138,26 @@ function genWhiteListTabEnt(website) {
 
 async function displayWhiteListTable() {
     const data = await chrome.storage.local.get(["user_whitelist"]);
-    if (data.user_whitelist && data.user_whitelist.length!=0) {
-        var tds = "";
-        data.user_whitelist.forEach(website => {
-            tds += genWhiteListTabEnt(website);
-        });
-        Display_whiteList_Domains.innerHTML = tds;
-
-        // add event listeners to facilitate deletion
-        let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-        delBtns.forEach((node) => 
-            node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-        );
-
-        whiteList_domains_table.style.display = "block";
-        Erase_Button.style.display = "block";
-
-    } else if(whiteList_Memory && whiteList_Memory.size!=0) {
-        var tds = "";
-        whiteList_Memory.forEach(website => {
-            // tds += "<tr><td>" + website + "</td></tr>";
-            tds += genWhiteListTabEnt(website);
-        }); 
-        Display_whiteList_Domains.innerHTML = tds;
-
-
-        // add event listeners to facilitate deletion
-        let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
-        delBtns.forEach((node) => 
-            node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
-        );
-     
-        whiteList_domains_table.style.display = "block";
-        Erase_Button.style.display = "block";
-
-    } else {
+    if (!data.user_whitelist || data.user_whitelist.length==0) {
         whiteList_domains_table.style.display = "none";
         Erase_Button.style.display = "none";
+        return;
     }
+
+    var tds = "";
+    data.user_whitelist.forEach(website => {
+        tds += genWhiteListTabEnt(website);
+    });
+    Display_whiteList_Domains.innerHTML = tds;
+
+    // add event listeners to facilitate deletion
+    let delBtns = document.querySelectorAll(".whitelist-ent-del-btn");
+    delBtns.forEach((node) => 
+        node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
+    );
+
+    whiteList_domains_table.style.display = "block";
+    Erase_Button.style.display = "block";
 }
 
 async function handleWhiteListEntDeletion(e) {
