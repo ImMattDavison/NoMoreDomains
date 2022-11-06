@@ -78,6 +78,9 @@ async function addWhiteList() {
 
     // Display all whitelisted domains
     displayWhiteListTable();
+
+    // clear the input field
+    Domain.value = "";
 }
 
 // Disable the whitelisting for the domains
