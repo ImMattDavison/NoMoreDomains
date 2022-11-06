@@ -5,7 +5,7 @@ var Erase_Button = document.getElementById("WhiteList_Erase_Button");
 var whiteList_domains_table = document.getElementById("whiteList_domains_table");
 var divider = document.querySelector(".divider");
 var whiteList_Memory = new Set();
-var whiteList_RuleIds = new Map();
+var whiteList_RuleIds = new Map();  // maps { domain -> id }
 
 async function addWhiteList() {
     if(Domain.value==undefined || Domain.value=="") {
@@ -79,38 +79,30 @@ async function addWhiteList() {
     displayWhiteListTable();
 }
 
+// Disable the whitelisting for the domains
 async function removeWhiteList(){
-    // Disable the whitelisting for the domains
-    const result = await chrome.storage.local.get(['rules_count','user_whitelist']);
-    console.log("removeWhiteList: ");
-    console.log(result.user_whitelist);
+    const result = await chrome.storage.local.get(['whiteList_RuleIds', 'rules_count']);
     
     // whitelist is empty
-    if(result.user_whitelist.length==0) {
+    if(!result.whiteList_RuleIds || result.whiteList_RuleIds.length==0) {
         alert("Add domains to whitelist before removing!");
         return;
     }
 
+    whiteList_RuleIds = new Map([...result.whiteList_RuleIds]);
+    console.log("removeWhiteList: ", whiteList_RuleIds);
+
     // update rules
-    let removeRuleIds = Array.from({ length: result.user_whitelist.length}, (_, i) => i + result.rules_count + 1);
-    let updatedRules = result.user_whitelist.map((domain, index) => createRule(
-        index + result.rules_count + 1,
-        false,
-        domain
-    ));
-    
-    await chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: removeRuleIds,
-        addRules: updatedRules,
-    });
-    console.log(whiteList_Memory);
+    let removeRuleIds = [...whiteList_RuleIds.values()]
+    console.log("Ids to remove", removeRuleIds);
+    await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: removeRuleIds });
 
     // Reset whilelist
     await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
     whiteList_Memory.clear();
+    whiteList_RuleIds.clear();
     setTimeout(() => alert("Whitelist Removed!"), 500);
 
-    console.log(whiteList_Memory);
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
    
     // hide table from the page
@@ -177,12 +169,7 @@ async function handleWhiteListEntDeletion(e) {
         console.error("no rule id found for: ", domain);
         return;
     }
-
-    let rule = createRule(ruleId, false, domain);
-    await chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [ruleId],
-        addRules: [rule]
-    });
+    await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: [ruleId] });
 
     // update whiteList_Memory and storage.local
     whiteList_Memory.delete(domain);
