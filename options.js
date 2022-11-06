@@ -1,4 +1,5 @@
 var WhiteList_Button = document.getElementById("WhiteList_Submit_Button");
+var Whitelist_Enter = document.getElementById("whiteListDomain");
 var Domain = document.getElementById("whiteListDomain");
 var Display_whiteList_Domains = document.getElementById("whiteList_domains");
 var Erase_Button = document.getElementById("WhiteList_Erase_Button");
@@ -217,6 +218,13 @@ function createRule(id, allow, domain) {
 document.addEventListener('DOMContentLoaded', restore_options);
 
 WhiteList_Button.addEventListener("click", addWhiteList);
+Whitelist_Enter.addEventListener("keypress", function(event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+      addWhiteList();
+    }
+});
+
 Erase_Button.addEventListener("click", removeWhiteList);
 
 
