@@ -14,6 +14,13 @@ async function addWhiteList() {
         return;
     }
 
+    var regex = new RegExp("^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}$");
+    if(!regex.test(Domain.value)) {
+        alert("Enter a valid domain value to add to whitelist!");
+        return;
+    }
+
+
     // Update whiteList_Memory with domains already exisitng in the local storage
     const result = await chrome.storage.local.get(['rules_count','user_whitelist']);
     if(result.user_whitelist && result.user_whitelist.length!=0) {
