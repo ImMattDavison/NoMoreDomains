@@ -45,14 +45,14 @@ chrome.runtime.onConnect.addListener((port) => {
 });
 
 // Fetch and add rules to declarativeNetRequest
-function fetchProtectionRules(url,status){
-  fetch(url)
+async function fetchProtectionRules(url,status){
+  let domains = await fetch(url)
   .then((res) => res.json())
-  .then((domains) => {
+  
     if(status==="redirect"){
-      chrome.storage.local.set({ "rules_count": domains.length }); // Save the count(number) of rules
+    await chrome.storage.local.set({ "rules_count": domains.length }); // Save the count(number) of rules
       console.log("Disabling domains!");
-      chrome.declarativeNetRequest.updateDynamicRules({
+    await chrome.declarativeNetRequest.updateDynamicRules({
         removeRuleIds: domains.map((_, index) => index + 1),
         addRules: domains.map((domain, index) => ({
           id: index + 1,
@@ -64,11 +64,11 @@ function fetchProtectionRules(url,status){
           },
         })),
       });
-    }
-    else if(status==="off"){
+
+  } else if(status==="off") {
       console.log("Allowing domains!");
       // TODO: remove user whitelisting also
-      chrome.declarativeNetRequest.updateDynamicRules({
+    await chrome.declarativeNetRequest.updateDynamicRules({
         removeRuleIds: domains.map((_, index) => index + 1),
         addRules: domains.map((domain, index) => ({
           id: index + 1,
@@ -81,18 +81,17 @@ function fetchProtectionRules(url,status){
         })),
       });
     }
-  });
 }
 
 // saveUpdateTime function sets the current date in chrome's local storage
-function saveUpdateTime() {
+async function saveUpdateTime() {
   const tDate = new Date().toLocaleDateString();
-  chrome.storage.local.set({ run_day: tDate });
+  await chrome.storage.local.set({ run_day: tDate });
 }
 
-function performUpdate(status) {
+async function performUpdate(status) {
   try {
-    fetchProtectionRules(DOMAIN_RULES_URL,status);
+    await fetchProtectionRules(DOMAIN_RULES_URL,status);
     console.log("Success: Rules Added");
   } catch (err) {
     console.log("Error fetching rules");
@@ -103,19 +102,19 @@ function performUpdate(status) {
 // 1. If date is added, it compares it with current date and if they mismatch it runs the update
 // 2. If date is not added(or is undefined) then it performs an update[This will be the "first time" update] and sets the date
 try {
-  chrome.storage.local.get(['run_day'], function (result) {
+  chrome.storage.local.get(['run_day'], async function (result) {
     let checkerDate = new Date().toLocaleDateString();
     if (result.run_day === undefined) {
       try {
-        saveUpdateTime();
-        performUpdate("redirect");
+        await saveUpdateTime();
+        await performUpdate("redirect");
         console.log("First Update Performed!");
       } catch (err) { console.log("Error while fetching first-run data:E01!"); }
     }
     else if (result.run_day !== checkerDate) {
       try {
-        saveUpdateTime();
-        performUpdate("redirect");
+        await saveUpdateTime();
+        await performUpdate("redirect");
         console.log("Updated Successfully!");
       } catch (err) { console.log("Error while fetching subsequent data: E02!"); }
     }
@@ -126,15 +125,15 @@ try {
 
 // Message passing between popup.js and this script to enable toggle(on/off) functionality
 chrome.runtime.onMessage.addListener(
-  function (request) {
+  async function (request) {
     if (request.NMD_status==="on"){
-      performUpdate("redirect");
+      await performUpdate("redirect");
     }
     else if (request.NMD_status === "off"){
-      performUpdate("off");
+      await performUpdate("off");
     }
     else{
-      performUpdate("redirect");
+      await performUpdate("redirect");
     }
   }
 );
@@ -144,8 +143,8 @@ async function revertRulesDefault() {
   // remove all rules
   let ruleIds = (await chrome.declarativeNetRequest.getDynamicRules())
     .map((rule)=>rule.id);
-  await chrome.declarativeNetRequest.updateDynamicRules({removeRuleIds: ruleIds});
 
-  // regenerated default rules
-  performUpdate("redirect");
+  await chrome.declarativeNetRequest.updateDynamicRules({removeRuleIds: ruleIds});
+  await chrome.storage.local.clear();
+  await performUpdate("redirect"); //regenerates default rules
 }
