@@ -20,7 +20,6 @@ async function addWhiteList() {
         return;
     }
 
-
     // Update whiteList_Memory with domains already exisitng in the local storage
     const result = await chrome.storage.local.get(['rules_count','user_whitelist']);
     if(result.user_whitelist && result.user_whitelist.length!=0) {
@@ -47,13 +46,9 @@ async function addWhiteList() {
         return;
     }
 
-
     // add domain entered by the user into the whitelist
     whiteList_Memory.add(Domain.value);
     console.log("user whitelist: ", whiteList_Memory);
-
-    // save to local storage
-    await chrome.storage.local.set({ "user_whitelist": [...whiteList_Memory] });
 
     // Add decleartiveNetRequest rules beyond the rules already present by default in the extension 
     var id = result.rules_count;
@@ -66,12 +61,6 @@ async function addWhiteList() {
         protectionRulesArr.push(createRule(id, true, domain));
     });
 
-    // save whiteList_RuleIds to storage.local.
-    // Assuming all whitelist entries is re-generated when
-    // entry is added, we don't need to access whiteList_RuleIds
-    // while updating it on storage.local
-    await chrome.storage.local.set({"whiteList_RuleIds": [...whiteList_RuleIds.entries()]})
-
     console.log("protection rule generated: ", protectionRulesArr);
     console.log("whitelist {domain, ruleId}: ", whiteList_RuleIds);
     await chrome.declarativeNetRequest.updateDynamicRules({
@@ -79,6 +68,15 @@ async function addWhiteList() {
             removeRuleIds: [...whiteList_RuleIds.values()], // extract ids for the rules
         },
     );
+
+    // Assuming all whitelist entries is re-generated when
+    // entry is added, we don't need to access whiteList_RuleIds
+    // while updating it on storage.local
+    await chrome.storage.local.set({
+        "whiteList_RuleIds": [...whiteList_RuleIds.entries()],
+        "user_whitelist": [...whiteList_Memory]
+    });
+    
     chrome.declarativeNetRequest.getDynamicRules((rules) => showModifiedRules(
         "after adding: ", rules
     ));
