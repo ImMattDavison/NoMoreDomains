@@ -3,16 +3,16 @@ var Button_Toggle = document.getElementById("toggleButton");
 var Options_Button = document.querySelector(".settings-icon");
 
 // Update toggle button: on/off in the UI using chrome storage value
-chrome.storage.local.get(['toggle_value'], (data) => {
-        if (data.toggle_value != undefined) {
-            if (data.toggle_value === "on") {
-                // toggle_value was set to on: We will toggle it
-                // Setting toggle_value to off
+chrome.storage.local.get(['extension_state'], (data) => {
+        if (data.extension_state != undefined) {
+            if (data.extension_state === "on") {
+                // extension_state was set to on: We will toggle it
+                // Setting extension_state to off
                 Button_Toggle.checked = true;
             }
-            else if (data.toggle_value === "off") {
-                // toggle_value was set to off: We will toggle it
-                // Setting toggle_value to on
+            else if (data.extension_state === "off") {
+                // extension_state was set to off: We will toggle it
+                // Setting extension_state to on
                 Button_Toggle.checked = false;
             }
         }
@@ -20,15 +20,15 @@ chrome.storage.local.get(['toggle_value'], (data) => {
             Button_Toggle.checked = true;
         }
     });
+
+// TODO: block user from toggling until toggled state is achieved
 function toggleNMD() {
     // Toggle logic
     if(Button_Toggle.checked === true){
-        chrome.storage.local.set({ toggle_value: "on" });
         chrome.runtime.sendMessage({ NMD_status: "on" });
         Button_Toggle.checked = true;
     }
     else if(Button_Toggle.checked === false){
-        chrome.storage.local.set({ toggle_value: "off" });
         chrome.runtime.sendMessage({ NMD_status: "off" });
         Button_Toggle.checked = false;
     }
