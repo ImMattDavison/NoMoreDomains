@@ -24,7 +24,7 @@ body {
   padding: 1em 1em 2em 1em;
   border-bottom-width: 3px;
   border-bottom-style: solid;
-  border-image: linear-gradient(45deg, rgb(255, 96, 0), rgb(0, 123, 255) 75%) 1;
+  border-color: #D90046;
 }
 
 .settings-row {
@@ -63,7 +63,7 @@ body {
 
 .power-switch {
   margin: auto;
-  padding-block: .4em;
+  padding-block: .74em;
 }
 
 .switch {
@@ -88,7 +88,7 @@ body {
   right: 0;
   bottom: 0;
   min-width: 80px;
-  background-color: rgb(26, 26, 26);
+  background-color: rgb(16, 16, 16);
   -webkit-transition: .4s;
   transition: .4s;
   padding-top: 0.15em;
@@ -113,7 +113,7 @@ body {
 }
 
 input:checked+.slider {
-  background-color: rgb(30, 28, 28);
+  background-color: rgb(16, 16, 16);
 }
 
 
