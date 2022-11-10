@@ -5,12 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blocked by No More Domains</title>
+    <link rel="icon" type="image/x-icon" href="assets/icon.png">
     <style>
         h3{
-            background: -webkit-linear-gradient(45deg, rgb(255, 96, 0), rgb(0, 123, 255) 75%);
-            background-clip: inherit;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
+            filter: drop-shadow(0 0 0.25rem #000);
             font-weight: 700;
             font-size: 2.5em;
             text-align: center;
@@ -45,6 +44,14 @@
         #myPara{text-align:center;}
         #myPara2{font-size:92%;text-align: center;}
         #mailAnchor{text-decoration:none;}
+        .nmd-button{
+            transition: all .2s ease;
+            background-color: #BC2037;
+        }
+        .nmd-button:hover{
+            transition: all .2s ease;
+            background-color: #A21C2F;
+        }
     </style>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -60,7 +67,7 @@
     <div id="info">
         <h3>This website has been blocked</h3>
         <p style="margin-block: 0 1.5em; color: #fff;" id="myPara">You were prevented from visiting this website by NoMoreDomains.</p>
-        <button style="border-radius: .5em; background-color: #007bff; color: #fff; border: none; padding: .5em 1em; font-size: 1.1em; cursor: pointer;" id="NMD_pause">Disable NoMoreDomains</button>
+        <button class="nmd-button" style="border-radius: .5em; color: #fff; border: none; padding: .5em 1em; font-size: 1.1em; cursor: pointer;" id="NMD_pause">Disable NoMoreDomains</button>
     </div>
     <script src="inject_block.js">
     </script>
