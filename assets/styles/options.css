@@ -58,6 +58,7 @@ body {
     border-radius: 8px;
     margin-block: 1em;
     color: #fff;
+    max-width: 50%;
 }
 
 .whitelist-container h2 {
@@ -127,7 +128,7 @@ body {
 .whitelisted-title {
     font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 0.5em;
+    margin-block: 1em;
 }
 
 .whitelist-ent-del-btn {
@@ -176,10 +177,7 @@ body {
 #whiteList_domains_table {
     display: none;
     margin-block: 1.5em;
-}
-
-#whiteList_domains {
-    margin-block: 2.5em;
+    width: 100%;
 }
 
 #whiteList_domains td {
