@@ -27,6 +27,10 @@ body {
   border-color: #BC2037;
 }
 
+.icon-logo{
+    margin-bottom: 1em;
+}
+
 .settings-row {
   display: flex;
   justify-content: flex-end;
