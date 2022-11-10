@@ -127,7 +127,7 @@ async function restore_options() {
 function genWhiteListTabEnt(website) {
     return (
         "<tr class='whitelist-ent'> \
-            <td>" + website + "</td> \
+            <td colspan='8'>" + website + "</td> \
             <td> \
                 <button class='whitelist-ent-del-btn' data-wl-ent='" + website + "'> \
                 <img src='assets/cross.svg'> \
