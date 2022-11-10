@@ -77,6 +77,7 @@ body {
     gap: 24px;
 }
 .whitelist-form input {
+    transition: all 0.2s ease;
     border: 2px solid #565656;
     padding: 0.75em;
     width: 60%;
@@ -91,7 +92,7 @@ body {
 .whitelist-form input:active,
 .whitelist-form input:focus-visible {
     transition: all 0.2s ease;
-    border-color: #3671b1;
+    border-color: #9f9f9f;
     outline: none;
 }
 
@@ -175,6 +176,10 @@ body {
 #whiteList_domains_table {
     display: none;
     margin-block: 1.5em;
+}
+
+#whiteList_domains {
+    margin-block: 2.5em;
 }
 
 #whiteList_domains td {
