@@ -140,6 +140,7 @@ body {
     border: 1px solid #f0f6fc1a;
     border-radius: 4px;
     transition: all 0.15s ease;
+    margin-left: 1em;
 }
 
 .whitelist-ent-del-btn:hover {
@@ -177,7 +178,7 @@ body {
 #whiteList_domains_table {
     display: none;
     margin-block: 1.5em;
-    width: 100%;
+    min-width: 100%;
 }
 
 #whiteList_domains td {
