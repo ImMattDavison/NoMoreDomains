@@ -111,7 +111,7 @@ body {
 .whitelist-form button:hover,
 .whitelist-form button:focus-visible {
     transition: all 0.15s ease;
-    background-color: #007bff;
+    background-color: #BC2037;
     color: #fff;
 }
 
@@ -135,14 +135,14 @@ body {
     font-weight: 600;
     cursor: pointer;
     background-color: #1e1e1e;
-    color: #da3633;
+    color: #BC2037;
     border: 1px solid #f0f6fc1a;
     border-radius: 4px;
     transition: all 0.15s ease;
 }
 
 .whitelist-ent-del-btn:hover {
-    background-color: #da3633;
+    background-color: #BC2037;
     border-color: #ff7b72;
     color: #fff;
 }
@@ -161,14 +161,14 @@ body {
     font-weight: 600;
     cursor: pointer;
     background-color: #1e1e1e;
-    color: #da3633;
+    color: #BC2037;
     border: 1px solid #f0f6fc1a;
     border-radius: 4px;
     transition: all 0.15s ease;
 }
 
 #WhiteList_Erase_Button:hover {
-    background-color: #da3633;
+    background-color: #BC2037;
     border-color: #ff7b72;
     color: #fff;
 }
