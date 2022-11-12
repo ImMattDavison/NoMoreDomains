@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200px" align="center" src="/assets/icon.svg" alt="logo">
+  <img width="150px" align="center" src="/assets/icon.svg" alt="logo">
 </p>
 <h1 align="center">NoMoreDomains</h1>
 <small align="center">Stop purchasing unnecessary domain names!</small>
