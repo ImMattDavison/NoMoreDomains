@@ -186,3 +186,9 @@ body {
     font-weight: 400;
     padding: 6px 0;
 }
+
+@media (max-width: 1200px) {
+    .whitelist-container {
+        max-width: 100%;
+    }
+}
