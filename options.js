@@ -5,6 +5,7 @@ var Display_whiteList_Domains = document.getElementById("whiteList_domains");
 var Erase_Button = document.getElementById("WhiteList_Erase_Button");
 var whiteList_domains_table = document.getElementById("whiteList_domains_table");
 var divider = document.querySelector(".divider");
+var whiteListedTitle = document.querySelector(".whitelisted-title");
 var whiteList_Memory = new Set();
 var whiteList_RuleIds = new Map();  // maps { domain -> id }
 
@@ -116,6 +117,8 @@ async function removeWhiteList(){
    
     // hide table from the page
     whiteList_domains_table.style.display = "none";
+    divider.style.display = "none";
+    whiteListedTitle.style.display = "none";
     Erase_Button.style.display = "none";
 }
 
@@ -141,6 +144,8 @@ async function displayWhiteListTable() {
     const data = await chrome.storage.local.get(["user_whitelist"]);
     if (!data.user_whitelist || data.user_whitelist.length==0) {
         whiteList_domains_table.style.display = "none";
+        divider.style.display = "none";
+        whiteListedTitle.style.display = "none";
         Erase_Button.style.display = "none";
         return;
     }
@@ -158,6 +163,8 @@ async function displayWhiteListTable() {
     );
 
     whiteList_domains_table.style.display = "block";
+    divider.style.display = "block";
+    whiteListedTitle.style.display = "block";
     Erase_Button.style.display = "block";
 }
 
@@ -197,6 +204,8 @@ async function handleWhiteListEntDeletion(e) {
         // no whitelist entry to save
         await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
         whiteList_domains_table.style.display = "none";
+        divider.style.display = "none";
+        whiteListedTitle.style.display = "none";
         Erase_Button.style.display = "none";
     }
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
