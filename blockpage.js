@@ -110,12 +110,18 @@ try {
 
 // Message passing between popup.js and this script to enable toggle(on/off) functionality
 chrome.runtime.onMessage.addListener(
-  async function (request) {
+  function (request, sender, sendMessage) {
     if (request.NMD_status==="on"){
-      await toggleExt("on");
+      toggleExt("on");
+    }
+    else if(request.revertRules) {
+      revertRulesDefault().then(() => sendMessage({ res: "done" }));
+      // in order to send message back asynchronously, 
+      // we need to return true.
+      return true; 
     }
     else if (request.NMD_status === "off"){
-      await toggleExt("off");
+      toggleExt("off");
     }
   }
 );

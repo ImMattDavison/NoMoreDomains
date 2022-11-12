@@ -132,7 +132,7 @@ function genWhiteListTabEnt(website) {
         "<tr class='whitelist-ent'> \
             <td colspan='8'>" + website + "</td> \
             <td> \
-                <button class='whitelist-ent-del-btn' data-wl-ent='" + website + "'> \
+                <button class='whitelist-ent-del-btn btn-2' data-wl-ent='" + website + "'> \
                 <img src='assets/cross.svg'> \
                 </button> \
             </td> \
@@ -210,6 +210,47 @@ async function handleWhiteListEntDeletion(e) {
     }
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
 }
+
+// IIFE to setup resetModal
+(function() {
+    let modal = document.querySelector("#reset-modal");
+    if(!modal) {
+        console.log("failed to get modal");
+        return;
+    }
+    // modal.addEventListener("focusout", (e) => {
+    //     console.log(e.currentTarget, e.target);
+    //     modal.style.visibility = "hidden";
+    //     modal.style.scale = 0;
+    // });
+    let confirmBtn = document.querySelector("#reset-modal #confirm-btn");
+    let cancelBtn = document.querySelector("#reset-modal #cancel-btn");
+    cancelBtn.addEventListener("click", () => {
+        modal.style.visibility = "hidden";
+        modal.style.scale = 0;
+    });
+    confirmBtn.addEventListener("click", async () => {
+        modal.style.visibility = "hidden";
+        modal.style.scale = 0;
+    
+        let reply = await chrome.runtime.sendMessage({ revertRules: true });
+        if(reply.res!=="done") {
+            console.error("could not reset rules");
+        }
+        displayWhiteListTable();
+    });
+})();
+
+function handleReset() {
+    let modal = document.querySelector("#reset-modal");
+    if(!modal) return;
+    modal.style.visibility = "visible";
+    modal.style.scale = 1;
+    // modal.focus();
+}
+
+let resetBtn = document.querySelector("#reset-btn");
+resetBtn.addEventListener("click", (e) => handleReset(e));
 
 /**
  * 

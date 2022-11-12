@@ -42,6 +42,81 @@ body {
     }
 }
 
+.btn-1 {
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    font-weight: 600;
+    background-color: #fff;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+
+.btn-1:hover,
+.btn-1:focus-visible {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-2 {
+    padding: 5px 9px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #1e1e1e;
+    color: #da3633;
+    border: 1px solid #f0f6fc1a;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.btn-2:hover {
+    background-color: #da3633;
+    border-color: #ff7b72;
+    color: #fff;
+}
+
+.modal-container {
+    visibility: hidden;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    inset: 0 0 0 0;
+    z-index: 999;
+}
+
+#reset-modal {
+    visibility: hidden;
+    background-color: #131313;
+    width: clamp(20rem, 50vw, 27rem);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1.5px solid #f0f6fc1a;
+    scale: 0;
+    transition: all 0.15s ease;
+}
+
+#reset-modal .confirmation-msg {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1em;
+    color: #d9d9d9;
+    line-height: 1.5;
+}
+
+#reset-modal .reset-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem; 
+}
+
+#reset-modal #confirm-btn,
+#reset-modal #cancel-btn {
+    transition: all 0.15ms ease, visibility 0s;
+}
+
 .title {
     font-size: 3.5rem;
     font-weight: 600;
@@ -77,6 +152,13 @@ body {
     display: flex;
     gap: 24px;
 }
+
+.option-bar {
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .whitelist-form input {
     transition: all 0.2s ease;
     border: 2px solid #565656;
@@ -98,23 +180,9 @@ body {
 }
 
 .whitelist-form button {
-    transition: all .15s ease;
-    padding: 0.5em 1em;
     font-size: 1.2rem;
-    border-radius: 4px;
-    font-weight: 600;
-    background-color: #fff;
-    border: none;
-    color: #000;
-    cursor: pointer;
 }
 
-.whitelist-form button:hover,
-.whitelist-form button:focus-visible {
-    transition: all 0.15s ease;
-    background-color: #BC2037;
-    color: #fff;
-}
 
 .divider {
     width: 100%;
@@ -129,24 +197,6 @@ body {
     font-size: 2rem;
     font-weight: 600;
     margin-block: 1em;
-}
-
-.whitelist-ent-del-btn {
-    padding: 5px 9px;
-    font-weight: 600;
-    cursor: pointer;
-    background-color: #1e1e1e;
-    color: #BC2037;
-    border: 1px solid #f0f6fc1a;
-    border-radius: 4px;
-    transition: all 0.15s ease;
-    margin-left: 1em;
-}
-
-.whitelist-ent-del-btn:hover {
-    background-color: #BC2037;
-    border-color: #ff7b72;
-    color: #fff;
 }
 
 .whitelist-ent-del-btn>img {

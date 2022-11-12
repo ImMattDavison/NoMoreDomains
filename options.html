@@ -8,10 +8,26 @@
 </head>
 
 <body>
+    <div class="modal-container">
+        <div id="reset-modal">
+            <div class="confirmation-msg">
+                <p>
+                    Are you sure you want to remove all the rules and revert to default rules.
+                </p> 
+            </div> 
+            <div class="reset-buttons">
+                <button id="confirm-btn" class="btn-2">Confirm</button>
+                <button id="cancel-btn" class="btn-1">Cancel</button>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <h1 class="title">NoMoreDomains</h1>
         <div class="options-grid">
             <div class="whitelist-container">
+                <div class="option-bar">
+                   <button id="reset-btn" class="btn-2">reset</button>
+                </div>
                 <div>
                     <h2>Whitelist Domains</h2>
                     <p>Whitelisted domains are not redirected by NoMoreDomains. Don’t worry, you can remove them later.</p>
@@ -19,7 +35,7 @@
                 <div id="optionsPageDiv" class="external-container">
                     <div class="whitelist-form">
                         <input type="text" id="whiteListDomain" placeholder="Add domain to whitelist">
-                        <button id="WhiteList_Submit_Button">Whitelist</button>
+                        <button id="WhiteList_Submit_Button" class="btn-1">Whitelist</button>
                     </div>
                     <div class="divider"></div>
                     <h2 class="whitelisted-title">Whitelisted Domains</h2>
