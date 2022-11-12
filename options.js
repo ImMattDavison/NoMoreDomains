@@ -214,23 +214,27 @@ async function handleWhiteListEntDeletion(e) {
 // IIFE to setup resetModal
 (function() {
     let modal = document.querySelector("#reset-modal");
+    let modalContainer = document.querySelector(".modal-container");
     if(!modal) {
         console.log("failed to get modal");
         return;
     }
-    // modal.addEventListener("focusout", (e) => {
-    //     console.log(e.currentTarget, e.target);
-    //     modal.style.visibility = "hidden";
-    //     modal.style.scale = 0;
-    // });
+    modalContainer.addEventListener("click", (e) => {
+        // only react when clicked on the whitespace around modal
+        if (e.eventPhase!==e.AT_TARGET) return;
+
+        modalContainer.style.visibility = "hidden";
+        modal.style.scale = 0;
+        e.stopPropagation();
+    }, { capture: true });
     let confirmBtn = document.querySelector("#reset-modal #confirm-btn");
     let cancelBtn = document.querySelector("#reset-modal #cancel-btn");
     cancelBtn.addEventListener("click", () => {
-        modal.style.visibility = "hidden";
+        modalContainer.style.visibility = "hidden";
         modal.style.scale = 0;
     });
     confirmBtn.addEventListener("click", async () => {
-        modal.style.visibility = "hidden";
+        modalContainer.style.visibility = "hidden";
         modal.style.scale = 0;
     
         let reply = await chrome.runtime.sendMessage({ revertRules: true });
@@ -243,10 +247,10 @@ async function handleWhiteListEntDeletion(e) {
 
 function handleReset() {
     let modal = document.querySelector("#reset-modal");
+    let modalContainer = document.querySelector(".modal-container");
     if(!modal) return;
-    modal.style.visibility = "visible";
+    modalContainer.style.visibility = "visible";
     modal.style.scale = 1;
-    // modal.focus();
 }
 
 let resetBtn = document.querySelector("#reset-btn");
