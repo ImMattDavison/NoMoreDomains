@@ -12,7 +12,8 @@
         <div id="reset-modal">
             <div class="confirmation-msg">
                 <p>
-                    Are you sure you want to remove all the rules and revert to default rules.
+                    Are you sure you want to remove all the
+                    rules and revert back to default rules.
                 </p> 
             </div> 
             <div class="reset-buttons">
@@ -21,13 +22,15 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <h1 class="title">NoMoreDomains</h1>
+    <main class="container">
+        <header id="title-bar">
+            <h1 class="title">NoMoreDomains</h1>
+            <div class="option-bar">
+                <button id="reset-btn" class="btn-2">reset</button>
+            </div>
+        </header>
         <div class="options-grid">
             <div class="whitelist-container">
-                <div class="option-bar">
-                   <button id="reset-btn" class="btn-2">reset</button>
-                </div>
                 <div>
                     <h2>Whitelist Domains</h2>
                     <p>Whitelisted domains are not redirected by NoMoreDomains. Don’t worry, you can remove them later.</p>
@@ -49,11 +52,11 @@
                         <tbody id="whiteList_domains">
                         </tbody>
                     </table>
-                    <button id="WhiteList_Erase_Button">Remove all domains</button>
+                    <button id="WhiteList_Erase_Button" class="btn-2">Remove all domains</button>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <script src="./options.js"></script>
 </body>
 
