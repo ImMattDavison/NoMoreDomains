@@ -115,7 +115,9 @@ chrome.runtime.onMessage.addListener(
       toggleExt("on");
     }
     else if(request.revertRules) {
-      revertRulesDefault().then(() => sendMessage({ res: "done" }));
+      revertRulesDefault()
+      .then(() => sendMessage({ res: "done" }))
+      .catch(() => sendMessage({ res: "failed" }));
       // in order to send message back asynchronously, 
       // we need to return true.
       return true; 

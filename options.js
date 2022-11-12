@@ -235,7 +235,7 @@ async function handleWhiteListEntDeletion(e) {
     
         let reply = await chrome.runtime.sendMessage({ revertRules: true });
         if(reply.res!=="done") {
-            console.error("could not reset rules");
+            console.error("could not reset rules: ", reply.res);
         }
         displayWhiteListTable();
     });
