@@ -1,9 +1,9 @@
 var WhiteList_Button = document.getElementById("WhiteList_Submit_Button");
 var Whitelist_Enter = document.getElementById("whiteListDomain");
+var WhiteListed_Section = document.querySelector("#whitelisted-domains")
 var Domain = document.getElementById("whiteListDomain");
 var Display_whiteList_Domains = document.getElementById("whiteList_domains");
 var Erase_Button = document.getElementById("WhiteList_Erase_Button");
-var whiteList_domains_table = document.getElementById("whiteList_domains_table");
 var divider = document.querySelector(".divider");
 var whiteList_Memory = new Set();
 var whiteList_RuleIds = new Map();  // maps { domain -> id }
@@ -115,8 +115,7 @@ async function removeWhiteList(){
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after removing all: ", rules));
    
     // hide table from the page
-    whiteList_domains_table.style.display = "none";
-    Erase_Button.style.display = "none";
+    WhiteListed_Section.style.display = "none";
 }
 
 async function restore_options() {
@@ -126,22 +125,21 @@ async function restore_options() {
 
 function genWhiteListTabEnt(website) {
     return (
-        "<tr class='whitelist-ent'> \
-            <td colspan='8'>" + website + "</td> \
-            <td> \
+        "<div class='whitelist-ent'> \
+            <div class='whitelist-txt'>" + website + "</div> \
+            <div class='whitelist-del-container'> \
                 <button class='whitelist-ent-del-btn' data-wl-ent='" + website + "'> \
                 <img src='assets/cross.svg'> \
                 </button> \
-            </td> \
-        </tr>"
+            </div> \
+        </div>"
     );
 }
 
 async function displayWhiteListTable() {
     const data = await chrome.storage.local.get(["user_whitelist"]);
     if (!data.user_whitelist || data.user_whitelist.length==0) {
-        whiteList_domains_table.style.display = "none";
-        Erase_Button.style.display = "none";
+        WhiteListed_Section.style.display = "none";
         return;
     }
 
@@ -157,8 +155,7 @@ async function displayWhiteListTable() {
         node.addEventListener("click", (e) => handleWhiteListEntDeletion(e))
     );
 
-    whiteList_domains_table.style.display = "block";
-    Erase_Button.style.display = "block";
+    WhiteListed_Section.style.display = "block";
 }
 
 async function handleWhiteListEntDeletion(e) {
@@ -196,8 +193,7 @@ async function handleWhiteListEntDeletion(e) {
     } else { 
         // no whitelist entry to save
         await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
-        whiteList_domains_table.style.display = "none";
-        Erase_Button.style.display = "none";
+        WhiteListed_Section.style.display = "none";
     }
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
 }

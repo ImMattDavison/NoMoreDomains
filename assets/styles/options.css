@@ -47,8 +47,8 @@ body {
     font-weight: 600;
     color: #fff;
     margin-block: 1em;
+    text-align: center;
     width: 100%;
-    border-radius: 0.5em;
 }
 
 /* WHITELIST */
@@ -58,7 +58,8 @@ body {
     border-radius: 8px;
     margin-block: 1em;
     color: #fff;
-    max-width: 50%;
+    max-width: 45rem;
+    margin: 0 auto;
 }
 
 .whitelist-container h2 {
@@ -75,13 +76,15 @@ body {
 }
 .whitelist-container .whitelist-form {
     display: flex;
+    justify-content: space-between;
     gap: 24px;
 }
 .whitelist-form input {
     transition: all 0.2s ease;
     border: 2px solid #565656;
     padding: 0.75em;
-    width: 60%;
+    flex-grow: 1;
+    min-width: 0;
     font-family: "Inter", sans-serif;
     font-size: 1.2rem;
     background-color: #1e1e1e;
@@ -114,6 +117,10 @@ body {
     transition: all 0.15s ease;
     background-color: #BC2037;
     color: #fff;
+}
+
+#whitelisted-domains {
+    display: none;
 }
 
 .divider {
@@ -157,7 +164,6 @@ body {
 }
 
 #WhiteList_Erase_Button {
-    display: none;
     padding: 0.5em 1em;
     font-size: 1.2rem;
     font-weight: 600;
@@ -176,13 +182,27 @@ body {
 }
 
 #whiteList_domains_table {
-    display: none;
     margin-block: 1.5em;
     min-width: 100%;
 }
 
-#whiteList_domains td {
+.whitelist-ent {
+    margin-block: 0.125rem;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-flow: row;
+}
+
+.whitelist-ent>.whitelist-txt {
+    grid-column: 1 / span 10;
+    word-wrap: break-word;
     font-size: 1.2rem;
     font-weight: 400;
     padding: 6px 0;
+
+}
+.whitelist-ent>.whitelist-del-container {
+    grid-column: auto / span 2;
+    display: grid;
+    place-items: center;
 }
