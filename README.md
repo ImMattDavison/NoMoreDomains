@@ -1,3 +1,4 @@
+<img src="/assets/icon.svg" alt="logo" height="55px"/>
 <h1 align="center">NoMoreDomains</h1>
 <small align="center">Stop purchasing unnecessary domain names!</small>
 
