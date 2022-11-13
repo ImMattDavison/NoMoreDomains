@@ -241,6 +241,11 @@ async function handleWhiteListEntDeletion(e) {
         if(reply.res!=="done") {
             console.error("could not reset rules: ", reply.res);
         }
+        // Reset whilelist
+        await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
+        whiteList_Memory.clear();
+        whiteList_RuleIds.clear();
+
         displayWhiteListTable();
     });
 })();
