@@ -43,20 +43,22 @@ body {
 }
 
 .btn-1 {
+    transition: all .15s ease;
     padding: 0.5em 1em;
     border-radius: 4px;
-    font-weight: 600;
-    background-color: #fff;
+    font-weight: 400;
+    background-color: transparent;
     border: none;
-    color: #000;
+    color: #fff;
+    text-decoration: underline;
     cursor: pointer;
-    transition: all .15s ease;
 }
 
 .btn-1:hover,
 .btn-1:focus-visible {
-    background-color: #007bff;
-    color: #fff;
+    transition: all .15s ease;
+    background-color: transparent;
+    text-decoration-color: transparent;
 }
 
 .btn-2 {
