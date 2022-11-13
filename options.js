@@ -132,7 +132,7 @@ function genWhiteListTabEnt(website) {
         "<tr class='whitelist-ent'> \
             <td colspan='8'>" + website + "</td> \
             <td> \
-                <button class='whitelist-ent-del-btn' data-wl-ent='" + website + "'> \
+                <button class='whitelist-ent-del-btn btn-2' data-wl-ent='" + website + "'> \
                 <img src='assets/cross.svg'> \
                 </button> \
             </td> \
@@ -210,6 +210,57 @@ async function handleWhiteListEntDeletion(e) {
     }
     chrome.declarativeNetRequest.getDynamicRules((rules)=> showModifiedRules("after deleting one: ", rules));
 }
+
+// IIFE to setup resetModal
+(function() {
+    let modal = document.querySelector("#reset-modal");
+    let modalContainer = document.querySelector(".modal-container");
+    if(!modal) {
+        console.log("failed to get modal");
+        return;
+    }
+    modalContainer.addEventListener("click", (e) => {
+        // only react when clicked on the whitespace around modal
+        if (e.eventPhase!==e.AT_TARGET) return;
+
+        modalContainer.style.visibility = "hidden";
+        modal.style.scale = 0;
+        e.stopPropagation();
+    }, { capture: true });
+    let confirmBtn = document.querySelector("#reset-modal #confirm-btn");
+    let cancelBtn = document.querySelector("#reset-modal #cancel-btn");
+    cancelBtn.addEventListener("click", () => {
+        modalContainer.style.visibility = "hidden";
+        modal.style.scale = 0;
+    });
+    confirmBtn.addEventListener("click", async () => {
+        modalContainer.style.visibility = "hidden";
+        modal.style.scale = 0;
+    
+        let reply = await chrome.runtime.sendMessage({ revertRules: true });
+        if(reply.res!=="done") {
+            console.error("could not reset rules: ", reply.res);
+            return;
+        }
+        // Reset whilelist
+        await chrome.storage.local.remove(["user_whitelist", "whiteList_RuleIds"]);
+        whiteList_Memory.clear();
+        whiteList_RuleIds.clear();
+
+        displayWhiteListTable();
+    });
+})();
+
+function handleReset() {
+    let modal = document.querySelector("#reset-modal");
+    let modalContainer = document.querySelector(".modal-container");
+    if(!modal) return;
+    modalContainer.style.visibility = "visible";
+    modal.style.scale = 1;
+}
+
+let resetBtn = document.querySelector("#reset-btn");
+resetBtn.addEventListener("click", (e) => handleReset(e));
 
 /**
  * 
