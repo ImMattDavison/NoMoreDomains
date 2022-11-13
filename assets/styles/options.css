@@ -185,7 +185,22 @@ body {
 }
 
 .whitelist-form button {
+    transition: all .15s ease;
+    padding: 0.5em 1em;
     font-size: 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    background-color: #fff;
+    border: none;
+    color: #000;
+    cursor: pointer;
+}
+
+.whitelist-form button:hover,
+.whitelist-form button:focus-visible {
+    transition: all 0.15s ease;
+    background-color: #BC2037;
+    color: #fff;
 }
 
 
