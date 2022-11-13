@@ -85,6 +85,8 @@ body {
     position: fixed;
     inset: 0 0 0 0;
     z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
 }
 
 #reset-modal {
@@ -114,6 +116,7 @@ body {
 #reset-modal #confirm-btn,
 #reset-modal #cancel-btn {
     transition: all 0.15ms ease, visibility 0s;
+    font-size: 1.2em;
 }
 
 #title-bar {
