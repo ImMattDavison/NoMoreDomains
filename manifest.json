@@ -24,7 +24,7 @@
     "128": "assets/icon128.png"
   },
   "permissions": [
-    "declarativeNetRequestWithHostAccess", 
+    "declarativeNetRequest", 
     "scripting",
     "storage"
   ],
