@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "No More Domains",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "No More Domains blocks all the ICANN registered domain registrars to help you stop buying so many unused domains!",
   "action": {
     "default_icon": "assets/icon.png",
